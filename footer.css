@@ -1,0 +1,81 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.footer-container {
+    text-align: center;
+    margin: 0;
+    position: relative;
+}
+
+.white-section {
+    background-color: transparent; /* Torna a seção branca transparente */
+    height: 100px; /* Altura ajustável */
+}
+
+.orange-section {
+    background-color: #f47c21; /* Cor laranja */
+    height: 100px; /* Altura fixa para garantir espaçamento */
+    padding: 30px 0 10px; /* Ajuste para posicionar o texto */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Move o texto para o final */
+}
+
+.logo-container {
+    position: absolute;
+    top: calc(50% - 55px); /* Centraliza entre os dois footers; ajuste 35px conforme necessário */
+    transform: translateX(-50%);
+    left: 50%;
+    background-color: #f47c21; /* Cor de fundo circular */
+    border-radius: 50%;
+    padding: 10px;
+    border: 8px solid white; /* Adiciona o padding branco ao redor do logotipo */
+}
+
+.logo-container img {
+    height: 70px; /* Ajuste conforme necessário */
+    width: 70px;
+}
+
+.orange-section nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+.footer-bottom {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+  }
+  
+  .footer-bottom .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .footer-bottom .footer-content p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .footer-bottom .social-icons a img {
+    width: 20px; /* Ajuste o tamanho conforme necessário */
+    height: auto;
+    margin: 0 8px;
+  }
+  
+  .footer-bottom .social-icons a img:hover {
+    filter: brightness(0.8); /* Efeito de escurecimento ao passar o mouse */
+  }
+  
+
