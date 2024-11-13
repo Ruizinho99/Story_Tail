@@ -1,0 +1,11 @@
+# Inicializar o repositório Git (se necessário)
+git init
+
+# Adicionar todos os arquivos ao Git para o commit
+git add .
+
+# Comitar as alterações com uma mensagem explicativa
+git commit -m "Sua mensagem de commit aqui"
+
+# Enviar as alterações para o repositório remoto (GitHub)
+git push origin main

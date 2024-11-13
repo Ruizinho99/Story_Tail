@@ -1,0 +1,189 @@
+//03
+DELIMITER $$
+/*
+
+CREATE PROCEDURE ListarLivros(
+    IN p_title VARCHAR(255),
+    IN p_age_group VARCHAR(50),
+    IN p_is_active BOOLEAN,
+    IN p_access_level VARCHAR(50),
+    IN p_added_at_start DATE,
+    IN p_added_at_end DATE
+)
+BEGIN
+    SELECT id, title, description, cover_url, age_group, is_active, access_level, added_at, updated_at
+    FROM books
+    WHERE (title LIKE CONCAT('%', p_title, '%') OR p_title IS NULL)
+      AND (age_group = p_age_group OR p_age_group IS NULL)
+      AND (is_active = p_is_active)
+      AND (access_level = p_access_level OR p_access_level IS NULL)
+      AND (added_at BETWEEN p_added_at_start AND p_added_at_end);
+END $$
+
+DELIMITER ;
+
+*/
+
+//04
+/*
+
+DELIMITER $$
+
+CREATE PROCEDURE ListarAtividadesLivro(IN p_book_id INT)
+BEGIN
+    SELECT 
+        a.id AS activity_id,
+        a.title AS activity_title,
+        a.description AS activity_description,
+        abu.user_id,
+        abu.progress AS user_progress
+    FROM activities a
+    INNER JOIN activity_book ab ON a.id = ab.activity_id
+    LEFT JOIN activity_book_user abu ON ab.id = abu.activity_book_id
+    WHERE ab.book_id = p_book_id;
+END $$
+
+DELIMITER ;
+
+*/
+
+//05_1
+/*
+
+DELIMITER $$
+
+CREATE PROCEDURE ListarLivrosFavoritos(IN p_user_id INT)
+BEGIN
+    SELECT 
+        b.id AS book_id,
+        b.title AS book_title,
+        b.description AS book_description,
+        b.cover_url AS book_cover,
+        b.publication_year AS book_year,
+        b.age_group AS book_age_group,
+        b.is_active AS book_status,
+        IFNULL(r.rating, 'Não Avaliado') AS book_rating,
+        f.user_id
+    FROM books b
+    INNER JOIN favorites f ON b.id = f.book_id
+    LEFT JOIN ratings r ON b.id = r.book_id AND r.user_id = f.user_id
+    WHERE f.user_id = p_user_id;
+END $$
+
+DELIMITER ;
+
+*/
+
+//05_2
+
+/*
+
+DELIMITER $$
+
+CREATE PROCEDURE ListarLivrosLidos(IN user_id INT)
+BEGIN
+    SELECT 
+        b.id AS book_id,
+        b.title AS book_title,
+        b.description AS book_description,
+        b.cover_url AS book_cover,
+        b.publication_year AS book_year,
+        b.age_group AS book_age_group,
+        b.is_active AS book_status,
+        rp.current_page AS user_progress,  -- Página em que o usuário parou de ler
+        r.rating AS user_rating,
+        r.rating_date AS user_read_date
+    FROM reading_progress rp
+    JOIN books b ON rp.book_id = b.id
+    LEFT JOIN ratings r ON rp.book_id = r.book_id AND rp.user_id = r.user_id
+    WHERE rp.user_id = user_id;
+END $$
+
+DELIMITER ;
+
+*/
+
+
+//06
+/*
+
+DELIMITER $$
+
+CREATE PROCEDURE SugerirLivros(IN p_user_id INT)
+BEGIN
+    SELECT 
+        b.id AS book_id,
+        b.title AS book_title,
+        b.description AS book_description,
+        b.cover_url AS book_cover,
+        COUNT(f.user_id) AS favorite_count,  -- Contagem de favoritos para cada livro
+        c.name AS category_name  -- Nome da categoria
+    FROM books b
+    LEFT JOIN favorites f ON b.id = f.book_id  -- Tabela de favoritos
+    LEFT JOIN book_category bc ON b.id = bc.book_id
+    LEFT JOIN categories c ON bc.category_id = c.id
+    WHERE b.is_active = TRUE  -- Sugere apenas livros ativos
+      AND b.access_level = 'public'  -- Exemplo: apenas livros de acesso público
+    GROUP BY b.id, b.title, b.description, b.cover_url, c.name
+    ORDER BY favorite_count DESC  -- Ordena pelo número de favoritos em ordem decrescente
+    LIMIT 5;  -- Limita o número de sugestões
+END $$
+
+DELIMITER ;
+
+*/
+
+//07
+/*
+CREATE OR REPLACE VIEW LivrosMaisPopulares AS
+SELECT 
+    b.id AS book_id,
+    b.title AS book_title,
+    b.description AS book_description,
+    b.cover_url AS book_cover,
+    COALESCE(Leituras.total_leituras, 0) AS total_leituras,
+    COALESCE(Favoritos.total_favoritos, 0) AS total_favoritos,
+    (COALESCE(Leituras.total_leituras, 0) + COALESCE(Favoritos.total_favoritos, 0)) AS total_popularidade
+FROM books b
+LEFT JOIN (
+    SELECT 
+        rp.book_id,
+        COUNT(rp.book_id) AS total_leituras
+    FROM reading_progress rp
+    WHERE rp.last_accessed >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+    GROUP BY rp.book_id
+) AS Leituras ON b.id = Leituras.book_id
+LEFT JOIN (
+    SELECT 
+        f.book_id,
+        COUNT(f.book_id) AS total_favoritos
+    FROM favorites f
+    WHERE f.added_at >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+    GROUP BY f.book_id
+) AS Favoritos ON b.id = Favoritos.book_id
+WHERE b.is_active = 1
+ORDER BY total_popularidade DESC;
+
+*/
+
+//08
+
+/*
+
+CREATE OR REPLACE VIEW HorariosMaisFortes AS
+SELECT 
+    HOUR(rp.last_accessed) AS hora_do_dia,
+    COUNT(rp.book_id) AS total_leituras,
+    COUNT(f.book_id) AS total_favoritos,
+    (COUNT(rp.book_id) + COUNT(f.book_id)) AS total_interacoes
+FROM reading_progress rp
+LEFT JOIN favorites f ON HOUR(rp.last_accessed) = HOUR(f.added_at)
+WHERE rp.last_accessed >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+   OR f.added_at >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+GROUP BY hora_do_dia
+ORDER BY total_interacoes DESC;
+
+*/
+
+
+

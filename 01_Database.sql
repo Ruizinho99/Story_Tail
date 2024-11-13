@@ -10,6 +10,45 @@ CREATE TABLE IF NOT EXISTS user_types (
     user_type VARCHAR(50) NOT NULL
 );
 
+
+-- CRIAR TABELA 'activities'
+CREATE TABLE IF NOT EXISTS activities (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- CRIAR TABELA 'activity_images'
+CREATE TABLE IF NOT EXISTS activity_images (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    activity_id INT NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE
+);
+
+-- CRIAR TABELA 'activity_book'
+CREATE TABLE IF NOT EXISTS activity_book (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    activity_id INT NOT NULL,
+    book_id INT NOT NULL,
+    FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE,
+    FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE
+);
+
+-- CRIAR TABELA 'activity_book_user'
+CREATE TABLE IF NOT EXISTS activity_book_user (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    activity_book_id INT NOT NULL,
+    user_id INT NOT NULL,
+    progress INT DEFAULT 0,
+    FOREIGN KEY (activity_book_id) REFERENCES activity_book(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- CRIAR TABELA 'users' 
 CREATE TABLE IF NOT EXISTS users (
     id INT PRIMARY KEY AUTO_INCREMENT,
