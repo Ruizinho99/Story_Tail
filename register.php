@@ -116,7 +116,7 @@
                     </div>
                     <!-- Alteração do botão -->
                     <button type="submit" class="btn-custom w-100 py-2">Login</button>
-                    <p class="mt-3 text-center">Already Have an account? <a href="/login.php" class="register-link">Register</a>.</p>
+                    <p class="mt-3 text-center">Already Have an account? <a href="/login.php" class="register-link">Login</a>.</p>
                 </form>
             </div>
         </div>
