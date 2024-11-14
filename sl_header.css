@@ -1,54 +1,96 @@
-* {
+/* Estilos gerais */
+body, html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
     font-family: Arial, sans-serif;
+    height: 100%;
 }
 
-header {
-    background-color: #333;
-    background-image: url('background-pattern.png'); /* Adicione uma imagem de fundo para imitar o padrão */
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 10px 20px;
-}
-
-.header-content {
+/* Container da logo centralizada */
+.logo-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    height: 100vh; /* Garante que a imagem ocupe a altura total da tela */
 }
 
-.logo {
-    color: #FFA500; /* Cor laranja para o título */
-    font-size: 24px;
+.logo-img {
+    width: 300px;
+    height: 300px;
+}
+
+/* Estilos do formulário */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px; /* Limita a largura do formulário */
+}
+
+/* Estilos para o cabeçalho do formulário */
+.register-header {
+    font-size: 28px;
+    color: #ff7f00;
+}
+
+.register-header h1 {
+    margin: 0;
+    font-weight: bold; /* Título mais espesso */
+}
+
+.register-header .register-icon {
+    width: 30px;
+    height: 30px;
+}
+
+/* Estilos dos campos de formulário */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
     font-weight: bold;
+    font-size: 16px;
 }
 
-.buttons button {
-    background-color: #FFA500; /* Cor laranja para os botões */
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button[type="submit"] {
+    background-color: #ff7f00;
     color: white;
     border: none;
-    padding: 8px 16px;
     font-size: 16px;
-    margin-left: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    padding: 12px 20px;
+    border-radius: 4px;
 }
 
-.buttons .sign-in {
-    background-color: #333; /* Cor escura para o botão Sign In */
-    color: #fff;
+button[type="submit"]:hover {
+    background-color: #e07000;
 }
 
-.buttons .register {
-    background-color: #FFA500; /* Cor laranja para o botão Register */
+p {
+    margin-top: 10px;
+    font-size: 14px;
 }
 
-.buttons button:hover {
-    background-color: #cc8400; /* Efeito de hover mais escuro */
+p a {
+    color: #ff7f00;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
 }

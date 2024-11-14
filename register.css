@@ -1,0 +1,105 @@
+/* Estilos gerais */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.register-section {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centraliza verticalmente o conteúdo */
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    min-height: 100vh; /* Garante que ocupa a altura total da viewport */
+}
+
+.form-logo img {
+    width: 50px; /* Definindo a imagem com 500x500px */
+    height: 50px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.form-content {
+    width: 100%;
+}
+
+.register-header {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaçamento entre o título e a imagem */
+    margin-bottom: 20px;
+}
+
+.register-header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #ff7f00;
+    font-weight: bold; /* Título mais espesso */
+}
+
+.register-header .register-icon {
+    max-width: 40px; /* Ajuste conforme necessário */
+    height: auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 700; /* Lables mais espessos */
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-button {
+    padding: 10px 20px;
+    background-color: #ff7f00;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.login-button:hover {
+    background-color: #e07000;
+}
+
+p {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+p a {
+    color: #ff7f00;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
