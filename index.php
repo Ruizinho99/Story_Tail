@@ -103,24 +103,18 @@ $books = getBooks($category);
             border: none;
             display: inline-flex;
             align-items: center;
-            justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+            justify-content: center;
             padding: 5px 10px;
             font-size: 14px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #d86c07;
-        }
-
-        .material-symbols-outlined {
-            margin-right: 8px; /* Espaçamento entre o ícone e o texto */
-            font-size: 18px; /* Ajuste do tamanho do ícone */
         }
 
         .btn[disabled] {
             background-color: #ccc;
+        }
+
+        .material-symbols-outlined {
+            margin-left: 8px; /* Espaço entre o texto e o ícone */
+            font-size: 20px; /* Ajuste do tamanho do ícone */
         }
     </style>
 </head>
