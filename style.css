@@ -1,13 +1,79 @@
+/* Reset e estilo do corpo */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* Contêiner de fundo */
+.background-container {
+    background-image: url('images/cover.png'); /* Imagem de fundo para header e search section */
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-color: transparent; /* Garantir que não haja cor de fundo por trás */
+}
+
+/* Header */
+header {
+    background-color: rgba(51, 51, 51, 0.7); /* Fundo semi-transparente */
+    padding: 10px 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #FFA500; /* Cor laranja para o título */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.buttons button {
+    background-color: rgba(255, 165, 0, 0.9); /* Cor laranja com 90% de opacidade */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.buttons .sign-in {
+    background-color: rgba(51, 51, 51, 0.8); /* Preto com 80% de opacidade para o botão Sign In */
+    color: #fff;
+}
+
+.buttons .register {
+    background-color: rgba(255, 165, 0, 0.9); /* Cor laranja com 90% de opacidade para o botão Register */
+}
+
+.buttons button:hover {
+    background-color: #cc8400; /* Efeito de hover mais escuro */
+}
+
 /* Seção de pesquisa */
 .search-section {
-    background-image: url('images/search.png');
-    background-size: cover;
-    background-position: center;
     width: 100%;
     height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: rgba(255, 255, 255, 0); /* Fundo branco semi-transparente */
+    position: relative;
+    z-index: 1;
 }
 
 .search-container {
@@ -19,6 +85,7 @@
     margin-bottom: 20px;
     color: #000; /* Texto "Find a book" em preto */
 }
+
 .search-bar {
     display: flex;
     align-items: center;
@@ -52,9 +119,10 @@
     font-size: 24px;
 }
 
-/* Seção New Books */
+/* Seção New Books (sem imagem de fundo) */
 .books-section {
     padding: 20px;
+    background-color: #fff; /* Fundo branco para garantir que não herde a imagem */
 }
 
 .category-selector {
@@ -120,3 +188,5 @@
 .book-item a:hover {
     background-color: #d15a00;
 }
+
+

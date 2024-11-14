@@ -1,4 +1,4 @@
-/* Estilos gerais */
+/* Estilos gerais /
 body, html {
     margin: 0;
     padding: 0;
@@ -7,12 +7,12 @@ body, html {
     height: 100%;
 }
 
-/* Container da logo centralizada */
+/ Container da logo centralizada /
 .logo-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Garante que a imagem ocupe a altura total da tela */
+    height: 100vh; / Garante que a imagem ocupe a altura total da tela /
 }
 
 .logo-img {
@@ -20,7 +20,7 @@ body, html {
     height: 300px;
 }
 
-/* Estilos do formulário */
+/ Estilos do formulário /
 .form-container {
     display: flex;
     justify-content: center;
@@ -33,10 +33,10 @@ body, html {
     background-color: white;
     border-radius: 8px;
     width: 100%;
-    max-width: 500px; /* Limita a largura do formulário */
+    max-width: 500px; / Limita a largura do formulário /
 }
 
-/* Estilos para o cabeçalho do formulário */
+/ Estilos para o cabeçalho do formulário /
 .register-header {
     font-size: 28px;
     color: #ff7f00;
@@ -44,7 +44,7 @@ body, html {
 
 .register-header h1 {
     margin: 0;
-    font-weight: bold; /* Título mais espesso */
+    font-weight: bold; / Título mais espesso /
 }
 
 .register-header .register-icon {
@@ -52,7 +52,7 @@ body, html {
     height: 30px;
 }
 
-/* Estilos dos campos de formulário */
+/ Estilos dos campos de formulário */
 .form-group label {
     display: block;
     margin-bottom: 8px;
