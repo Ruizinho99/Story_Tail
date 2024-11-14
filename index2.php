@@ -1,56 +1,49 @@
-<?php
-// Informações de conexão com o banco de dados
-$host = 'localhost'; // ou o IP do servidor MySQL
-$username = 'root'; // Nome de usuário do MySQL
-$password = ''; // Senha do MySQL
-$dbname = 'LP'; // Nome da base de dados
-
-// Criar conexão com o banco de dados
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Verificar conexão
-if ($conn->connect_error) {
-    die("Erro de conexão: " . $conn->connect_error);
-}
-
-// Consulta para buscar livros
-$sql = "SELECT id, title, cover_url, added_at FROM books WHERE is_active = 1 ORDER BY added_at DESC";
-$result = $conn->query($sql);
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Livros - Cards Simples</title>
+    <title>Login & Register</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="register.css">
 </head>
+
 <body>
-    <h1>Lista de Livros</h1>
+    <main>
+        <section class="register-section">
+            <div class="form-container">
+                <!-- Adiciona a imagem do logotipo -->
+                <div class="form-logo">
+                    <img src="images/storytail-logo-02.png" alt="Storytail Logo">
+                </div>
 
-    <?php
-    // Verificar se há livros no resultado da consulta
-    if ($result->num_rows > 0) {
-        // Exibir cada livro como um card simples
-        while ($row = $result->fetch_assoc()) {
-            echo '<div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">';
-            echo '<h2>' . htmlspecialchars($row['title']) . '</h2>';
-            if (!empty($row['cover_url'])) {
-                echo '<img src="' . htmlspecialchars($row['cover_url']) . '" alt="' . htmlspecialchars($row['title']) . '" style="max-width: 200px; max-height: 200px;"><br>';
-            } else {
-                echo '<p>Imagem não disponível</p>';
-            }
-            echo '<p>Adicionado em: ' . htmlspecialchars($row['added_at']) . '</p>';
-            echo '</div>';
-        }
-    } else {
-        echo '<p>Nenhum livro encontrado.</p>';
-    }
-
-    // Fechar conexão com o banco de dados
-    $conn->close();
-    ?>
-
+                <!-- Formulário de registro -->
+                <div class="form-content">
+                    <div class="register-header">
+                        <h1>Register</h1>
+                        <img src="images/register.png" alt="Register Icon" class="register-icon">
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" placeholder="Enter your email or username">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" placeholder="Enter your Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" placeholder="Enter your password">
+                        </div>
+                        <button type="submit" class="login-button">Login</button>
+                        <p>Don't have an account? <a href="#">Register</a>.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
+
 </html>
