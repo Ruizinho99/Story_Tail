@@ -1,0 +1,23 @@
+DELIMITER //
+
+CREATE PROCEDURE get_new_books()
+BEGIN
+    SELECT * FROM books WHERE access_level = 'public' ORDER BY added_at DESC LIMIT 10;
+END //
+
+CREATE PROCEDURE get_our_picks()
+BEGIN
+    SELECT * FROM books WHERE access_level = 'public' ORDER BY RAND() LIMIT 10;
+END //
+
+CREATE PROCEDURE get_most_popular()
+BEGIN
+    SELECT b.* 
+    FROM books b
+    JOIN ratings r ON b.id = r.book_id
+    GROUP BY b.id
+    ORDER BY AVG(r.rating) DESC
+    LIMIT 10;
+END //
+
+DELIMITER ;
