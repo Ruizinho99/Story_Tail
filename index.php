@@ -4,18 +4,22 @@ if ($conn->connect_error) {
     die("Erro de conexão: " . $conn->connect_error);
 }
 
-// Função para verificar o acesso ao livro
+// Função para verificar se o livro é acessível
 function canAccessBook($book, $user)
 {
-    // Verifica se o livro tem acesso restrito (privado)
-    if ($book['access_level'] === 'private') {
+    // Se o livro é privado (1) e o usuário não é premium
+    if ($book['access_level'] == 1) {
         // Verifica se o usuário é premium
-        return $user['user_type_id'] === 1; // Considerando 1 como ID de usuários premium
+        if ($user['user_type_id'] == 1) {
+            return true; // Usuário premium pode acessar
+        } else {
+            return false; // Usuário não premium não pode acessar
+        }
     }
-    // Se o acesso do livro for público, todos podem acessar
-    return true;
+    return true; // Se for público (0), todos podem acessar
 }
 
+// Função para obter livros de acordo com a categoria
 function getBooks($category)
 {
     global $conn;
@@ -40,9 +44,12 @@ function getBooks($category)
     }
 }
 
-// Supondo que você tenha uma variável $user com os dados do usuário logado
-// Exemplo: $user = ['user_type_id' => 1]; 1 para premium, 2 para não premium
-$user = ['user_type_id' => 1];  // Exemplo de um usuário premium
+// Exemplo de usuário logado
+$user = ['user_type_id' => 2];  // Exemplo de um usuário gratuito (Free)
+
+// Verificar categoria selecionada
+$category = isset($_GET['category']) ? $_GET['category'] : "New Books";
+$books = getBooks($category);
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +61,8 @@ $user = ['user_type_id' => 1];  // Exemplo de um usuário premium
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Para o ícone de cadeado -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=lock" />
     <title>Exemplo com iframe</title>
     <style>
         .card {
@@ -78,7 +86,7 @@ $user = ['user_type_id' => 1];  // Exemplo de um usuário premium
             left: 0;
             right: 0;
             padding: 10px;
-            background: rgba(0, 0, 0, 0.6); /* Fundo escuro e semitransparente */
+            background: rgba(0, 0, 0, 0.6);
             color: white;
             text-align: center;
             z-index: 2;
@@ -93,14 +101,26 @@ $user = ['user_type_id' => 1];  // Exemplo de um usuário premium
             background-color: #E1700F;
             color: white;
             border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #d86c07;
+        }
+
+        .material-symbols-outlined {
+            margin-right: 8px; /* Espaçamento entre o ícone e o texto */
+            font-size: 18px; /* Ajuste do tamanho do ícone */
         }
 
         .btn[disabled] {
             background-color: #ccc;
-        }
-
-        .fa-lock {
-            color: white;
         }
     </style>
 </head>
@@ -126,9 +146,6 @@ $user = ['user_type_id' => 1];  // Exemplo de um usuário premium
     <section class="new-books-section">
         <?php
         echo '<link rel="stylesheet" type="text/css" href="styles/new_books.css">';
-
-        $category = isset($_GET['category']) ? $_GET['category'] : "New Books";
-        $books = getBooks($category);
         ?>
 
         <div class="books-section">
@@ -156,14 +173,23 @@ $user = ['user_type_id' => 1];  // Exemplo de um usuário premium
                                                 <h5 class="card-title"><?= htmlspecialchars($book['title']) ?></h5>
 
                                                 <div class="d-flex justify-content-center">
-                                                    <?php if ($book['access_level'] == 'public'): ?>
+                                                    <?php
+                                                    // Verificação do tipo de acesso ao livro e tipo de usuário
+                                                    if ($book['access_level'] == 0): ?>
+                                                        <!-- Livro Público (acesso 0) -->
                                                         <a href="reading.php?book_id=<?= $book['id'] ?>" class="btn">Read</a>
-                                                        <a href="preview.php?book_id=<?= $book['id'] ?>" class="btn">Preview</a>
-                                                    <?php else: ?>
-                                                        <button class="btn" disabled>
-                                                            <i class="fa fa-lock"></i> Preview
-                                                        </button>
-                                                        <a href="reading.php?book_id=<?= $book['id'] ?>" class="btn">Read</a>
+                                                    <?php elseif ($book['access_level'] == 1): ?>
+                                                        <!-- Livro Privado (acesso 1) -->
+                                                        <?php if ($user['user_type_id'] == 1): ?>
+                                                            <!-- Usuário Premium pode ler -->
+                                                            <a href="reading.php?book_id=<?= $book['id'] ?>" class="btn">Read</a>
+                                                        <?php else: ?>
+                                                            <!-- Usuário Gratuito verá Preview com ícone de cadeado dentro do botão -->
+                                                            <a href="preview.php?book_id=<?= $book['id'] ?>" class="btn">
+                                                                <span class="material-symbols-outlined">lock</span>
+                                                                Preview
+                                                            </a>
+                                                        <?php endif; ?>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
