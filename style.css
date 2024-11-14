@@ -189,4 +189,9 @@ header {
     background-color: #d15a00;
 }
 
+.profile-sidebar img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+}
 
