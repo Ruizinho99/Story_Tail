@@ -1,0 +1,53 @@
+/* Seção de pesquisa */
+.search-section {
+    background-image: url('images/search.png');
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-container {
+    text-align: center;
+}
+
+.search-container h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #000; /* Texto "Find a book" em preto */
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar input[type="text"] {
+    padding: 10px;
+    width: 300px;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #333;
+}
+
+.search-bar button {
+    padding: 10px; /* Ajuste para centralizar o ícone verticalmente */
+    background-color: #E1700F;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar button .material-icons {
+    color: #fff;
+    font-size: 24px;
+}

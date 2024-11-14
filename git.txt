@@ -9,3 +9,6 @@ git commit -m "Sua mensagem de commit aqui"
 
 # Enviar as alterações para o repositório remoto (GitHub)
 git push origin main
+
+
+
