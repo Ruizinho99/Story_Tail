@@ -39,21 +39,24 @@ function getBooks($category) {
     <title>Exemplo com iframe</title>
 </head>
 <body>
-    <?php include 'sl_header.html'; ?>
+    <!-- Contêiner de fundo para header e search-section -->
+    <div class="background-container">
+        <?php include 'sl_header.html'; ?>
 
-    <section class="search-section">
-        <div class="search-container">
-            <h2>Find a book</h2>
-            <div class="search-bar">
-                <input type="text" placeholder="eg. title, type..." />
-                <button type="submit">
-                    <span class="material-icons">search</span>
-                </button>
+        <section class="search-section">
+            <div class="search-container">
+                <h2>Find a book</h2>
+                <div class="search-bar">
+                    <input type="text" placeholder="eg. title, type..." />
+                    <button type="submit">
+                        <span class="material-icons">search</span>
+                    </button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
-    <!-- Seção New Books -->
+    <!-- Seção New Books (sem imagem de fundo) -->
     <section class="new-books-section">
         <?php
         // Carregar estilos específicos da seção New Books
@@ -91,3 +94,4 @@ function getBooks($category) {
     <?php include 'footer.html'; ?>
 </body>
 </html>
+
