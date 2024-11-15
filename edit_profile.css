@@ -2,7 +2,7 @@
 
 /* Custom CSS para ajustar o estilo */
 .navbar {
-    background-color: #f27a1a;
+    background-color: #E1700F;
 }
 .navbar-brand {
     color: #fff !important;
@@ -38,8 +38,45 @@
     border-radius: 50%;
 }
 .btn-warning {
-    background-color: #f27a1a;
-    border-color: #f27a1a;
+    background-color: #E1700F;
+    border-color: #E1700F;
 }
 
-    
+/* Arquivo edit_profile.css */
+
+/* Estilo para os botões "+ New Picture" e "Apply" */
+.btn-warning {
+    background-color: #E1700F !important; /* Cor de fundo */
+    border-color: #E1700F !important;     /* Cor da borda */
+    color: #ffffff !important;            /* Cor do texto em branco */
+}
+
+/* Mudança de cor ao passar o mouse */
+.btn-warning:hover {
+    background-color: #d85f0d !important; /* Tom mais escuro ao passar o mouse */
+    border-color: #d85f0d !important;
+    color: #ffffff !important;            /* Garantir texto branco no hover */
+}
+/* Arquivo edit_profile.css */
+
+/* Espaçamento personalizado entre os botões "Cancel" e "Apply" */
+.btn-cancel {
+    margin-right: 810px; /* Ajuste o valor conforme necessário */
+}
+
+/* Estilo para os campos de formulário */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    background-color: #f0f0f0; /* Fundo cinza claro */
+    border-radius: 15px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno */
+}
+
+.form-row .form-group {
+    margin-bottom: 20px; /* Espaçamento entre os campos */
+}

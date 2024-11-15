@@ -45,9 +45,12 @@
             <!-- Sidebar -->
             <div class="col-md-3 profile-sidebar">
                 <div class="text-center">
-                    <img src="https://via.placeholder.com/80" alt="User Image">
-                    <h5 class="mt-2">Cátia Vanessa</h5>
-                    <a href="#" class="text-success font-weight-bold">Edit Profile</a>
+                    <img src="images/vski.jpeg" alt="User Image">
+                    <h5 class="mt-2">Tiago VSKI</h5>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-warning">+ New Picture</button>
+                    </div>
+                
                 </div>
                 <hr>
             </div>
@@ -74,18 +77,12 @@
                         <label for="username">Username:</label>
                         <input type="text" class="form-control" id="username" placeholder="Enter username">
                     </div>
-                    <div class="form-group">
-                        <label>Profile Picture:</label><br>
-                        <button type="button" class="btn btn-warning">+ New Picture</button>
-                    </div>
-                    <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                    <button type="button" class="btn btn-outline-secondary btn-cancel">Cancel</button>
                     <button type="submit" class="btn btn-warning">Apply</button>
                 </form>
             </div>
         </div>
     </div>
-
-    
 
     <!-- Optional JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -94,8 +91,6 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <div>
     <?php include 'footer.html'; ?>
- </div>
-
-
+    </div>
 </body>
 </html>
