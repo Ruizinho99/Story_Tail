@@ -1,53 +1,9 @@
 <?php
-// Conectar à base de dados
-$servername = "localhost";  // Normalmente localhost
-$username = "root";         // Username para a base de dados
-$password = "";             // Senha da base de dados (caso tenha)
-$dbname = "lp";             // Nome da sua base de dados
+// login.php
+session_start();
 
-// Criar a conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar a conexão
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Variáveis para armazenar mensagens
-$successMessage = "";
-$errorMessage = "";
-
-// Processar o formulário de login
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usernameOrEmail = mysqli_real_escape_string($conn, $_POST['username_or_email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    
-    // Verificar se o nome de utilizador ou email existe
-    $checkUserQuery = "SELECT * FROM users WHERE user_name = '$usernameOrEmail' OR email = '$usernameOrEmail'";
-    $result = $conn->query($checkUserQuery);
-
-    if ($result->num_rows > 0) {
-        // O utilizador existe, verificar a password
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
-            // Password correta, redirecionar para a página inicial
-            session_start();
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['user_name'];
-            $_SESSION['user_type_id'] = $user['user_type_id'];
-            header("Location: index.php"); // Redireciona para a homepage (alterar o nome do ficheiro conforme necessário)
-            exit();
-        } else {
-            // Password incorreta
-            $errorMessage = "Username ou password incorreta.";
-        }
-    } else {
-        // Utilizador não encontrado
-        $errorMessage = "Username ou password incorreta.";
-    }
-}
-
-$conn->close();
+// Incluir o arquivo de validação de login
+include_once 'validar_login.php';
 ?>
 
 <!DOCTYPE html>
