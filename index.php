@@ -65,7 +65,7 @@ if ($isLoggedIn) {
     echo '<p>Bem-vindo, ' . htmlspecialchars($user_name) . '!</p>';
 } else {
     // Se o usuário não estiver logado, incluir o cabeçalho 'sl_login.html'
-    include_once 'sl_login.html';
+    include_once 'sl_header.html';
 }
 
 ?>
