@@ -1,0 +1,57 @@
+/* Arquivo style.css */
+
+/* Custom CSS para ajustar o estilo */
+.navbar {
+    background-color: #E1700F;
+}
+.navbar-brand {
+    color: #fff !important;
+    font-weight: bold;
+}
+.nav-link {
+    color: #000000 !important; /* Cor preta para os links de navegação */
+}
+.search-bar {
+    max-width: 300px;
+}
+.nav-tabs {
+    border-bottom: 2px solid #000000;
+}
+.nav-tabs .nav-item {
+    margin-right: 20px;
+}
+.nav-tabs .nav-link {
+    color: #000000 !important; /* Definir a cor preta */
+    font-weight: bold;
+}
+.nav-tabs .nav-link.active {
+    border-bottom: 3px solid #000000;
+}
+.profile-sidebar {
+    text-align: center;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+}
+/* Cor personalizada para o título */
+.custom-title {
+    color: #E1700F;
+}
+
+/* Cor personalizada para o título */
+.custom-title {
+    color: #E1700F;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Cor personalizada para o botão */
+.custom-btn {
+    background-color: #E1700F;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.custom-btn:hover {
+    background-color: #E1700F; /* Um tom mais escuro para o efeito hover */
+}
