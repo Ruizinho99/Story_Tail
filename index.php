@@ -1,28 +1,7 @@
 <?php
-// Defina as informações de conexão
-$host = 'localhost'; // ou o IP do servidor MySQL
-$username = 'root';  // Nome de usuário do MySQL
-$password = '';      // Senha do MySQL
-$dbname = 'LP';      // Nome da base de dados que você quer usar
-
-// Criar a conexão com o MySQL
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Verificar se a conexão foi bem-sucedida
-if ($conn->connect_error) {
-    die("Erro de conexão: " . $conn->connect_error);
-}
+include_once("db_connection.php");
 
 session_start(); // Certifique-se de que a sessão está iniciada aqui também
-
-$isLoggedIn = isset($_SESSION['user']); // Verifica se o usuário está logado
-
-if ($isLoggedIn) {
-    include 'header.html'; // Inclui o cabeçalho de usuários logados
-} else {
-    include 'sl_header.html'; // Inclui o cabeçalho de usuários não logados
-}
-
 
 if ($conn->connect_error) {
     die("Erro de conexão: " . $conn->connect_error);
@@ -69,13 +48,26 @@ function getBooks($category)
 }
 
 // Verifica se o usuário está logado
-$isLoggedIn = isset($_SESSION['user']);
-// Se estiver logado, utiliza a informação do usuário da sessão; se não, define como usuário gratuito
-$user = $isLoggedIn ? $_SESSION['user'] : ['user_type_id' => 2]; // Exemplo de um usuário gratuito (Free)
+$isLoggedIn = isset($_SESSION['user_name']); // Verifique se 'user_name' existe na sessão
+$user = $isLoggedIn ? $_SESSION : ['user_type_id' => 2]; // Exemplo de um usuário gratuito (Free)
 
 // Verificar categoria selecionada
 $category = isset($_GET['category']) ? $_GET['category'] : "New Books";
 $books = getBooks($category);
+
+// Verificar se o usuário está logado
+if ($isLoggedIn) {
+    // Se o usuário estiver logado, incluir o cabeçalho 'header.html'
+    include_once 'header.html';
+
+    // Exibir nome completo do usuário
+    $user_name = $_SESSION['user_name']; // Usando 'user_name' da sessão
+    echo '<p>Bem-vindo, ' . htmlspecialchars($user_name) . '!</p>';
+} else {
+    // Se o usuário não estiver logado, incluir o cabeçalho 'sl_login.html'
+    include_once 'sl_login.html';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -147,15 +139,7 @@ $books = getBooks($category);
 
 <body>
     <div class="background-container">
-        <?php 
-            // Inclui o cabeçalho apropriado com base no estado de login do usuário
-            if ($isLoggedIn) {
-                include 'header.html';
-            } else {
-                include 'sl_header.html';
-            }
-        ?>
-
+        <!-- O cabeçalho já foi incluído no código acima -->
         <section class="search-section">
             <div class="search-container">
                 <h2>Find a book</h2>
@@ -237,5 +221,4 @@ $books = getBooks($category);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
