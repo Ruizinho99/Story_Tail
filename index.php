@@ -58,50 +58,15 @@ $books = getBooks($category);
 
 <body>
 
-    <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id']): ?>
-    <!-- Header com Login -->
-    <header class="StHeader">
-        <div class="container-fluid">
-            <div class="row align-items-center py-2">
-                <!-- Logo -->
-                <div class="col-6">
-                    <div class="StLogo text-white fs-4">STORYTAILS</div>
-                </div>
-
-                <!-- Navigation and User -->
-                <div class="col-6 text-end">
-                    <nav class="StNav d-inline-block">
-                        <a href="#" class="text-white text-decoration-none me-4">Home</a>
-                    </nav>
-                    <!-- User Dropdown -->
-                    <div class="dropdown d-inline-block">
-                        <a href="#" class="text-white text-decoration-none" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle fs-4"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#">Edit Profile</a></li>
-                            <li><a class="dropdown-item" href="#">My Books</a></li>
-                            <li><a class="dropdown-item" href="#">Favourite Books</a></li>
-                            <li><a class="dropdown-item" href="#">Change Password</a></li>
-                            <li><a class="dropdown-item" href="#">Plan</a></li>
-                            <li><a class="dropdown-item" href="#">Help</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <?php else: ?>
-    <!-- Header sem Login -->
-    <header>
-        <div class="header-content">
-            <div class="logo">STORYTAILS</div>
-            <div class="buttons">
-                <button class="sign-in" onclick="location.href='login.php'">Sign In</button>
-                <button class="register" onclick="location.href='register.php'">Register</button>
-            </div>
-        </div>
-    </header>
+    <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id']): 
+        
+       include_once("index_header.html")?>
+       <!-- Header com Login -->
+    <?php else: 
+        
+        include_once("sem_login.html")?>
+        <!-- Header sem Login -->
+        
     <?php endif; ?>
 
     <div class="background-container">
@@ -182,8 +147,9 @@ $books = getBooks($category);
     <?php include 'footer.html'; ?>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+ 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
