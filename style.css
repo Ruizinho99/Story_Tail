@@ -1,197 +1,55 @@
-/* Reset e estilo do corpo */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* Estilos para o conteúdo principal (index.php) */
 
-body {
-    font-family: Arial, sans-serif;
-    color: #333;
-}
-
-/* Contêiner de fundo */
-.background-container {
-    background-image: url('images/cover.png'); /* Imagem de fundo para header e search section */
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-color: transparent; /* Garantir que não haja cor de fundo por trás */
-}
-
-/* Header */
-header {
-    background-color: rgba(51, 51, 51, 0.7); /* Fundo semi-transparente */
-    padding: 10px 20px;
+/* Cartões de livros */
+.card {
+    width: 200px;
+    height: 300px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    overflow: hidden;
     position: relative;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
     z-index: 2;
 }
 
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.card-title {
+    font-size: 1rem;
+    margin: 0;
 }
 
-.logo {
-    color: #FFA500; /* Cor laranja para o título */
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.buttons button {
-    background-color: rgba(255, 165, 0, 0.9); /* Cor laranja com 90% de opacidade */
+/* Botões */
+.btn {
+    background-color: #E1700F;
     color: white;
     border: none;
-    padding: 8px 16px;
-    font-size: 16px;
-    margin-left: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.buttons .sign-in {
-    background-color: rgba(51, 51, 51, 0.8); /* Preto com 80% de opacidade para o botão Sign In */
-    color: #fff;
-}
-
-.buttons .register {
-    background-color: rgba(255, 165, 0, 0.9); /* Cor laranja com 90% de opacidade para o botão Register */
-}
-
-.buttons button:hover {
-    background-color: #cc8400; /* Efeito de hover mais escuro */
-}
-
-/* Seção de pesquisa */
-.search-section {
-    width: 100%;
-    height: 300px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0); /* Fundo branco semi-transparente */
-    position: relative;
-    z-index: 1;
+    padding: 5px 10px;
+    font-size: 14px;
 }
 
-.search-container {
-    text-align: center;
+.btn[disabled] {
+    background-color: #ccc;
 }
 
-.search-container h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: #000; /* Texto "Find a book" em preto */
+.material-symbols-outlined {
+    margin-left: 8px;
+    font-size: 20px;
 }
-
-.search-bar {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.search-bar input[type="text"] {
-    padding: 10px;
-    width: 300px;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    color: #333;
-}
-
-.search-bar button {
-    padding: 10px; /* Ajuste para centralizar o ícone verticalmente */
-    background-color: #E1700F;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-bar button .material-icons {
-    color: #fff;
-    font-size: 24px;
-}
-
-/* Seção New Books (sem imagem de fundo) */
-.books-section {
-    padding: 20px;
-    background-color: #fff; /* Fundo branco para garantir que não herde a imagem */
-}
-
-.category-selector {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.category-selector a {
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    border-bottom: 2px solid transparent;
-}
-
-.category-selector a.active {
-    color: #e67e22;
-    border-color: #e67e22;
-}
-
-.books-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.book-item {
-    width: 200px;
-    text-align: center;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-}
-
-.book-item img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.book-item h3 {
-    font-size: 1.2em;
-    margin-top: 10px;
-}
-
-.book-item a {
-    display: block;
-    margin-top: 10px;
-    padding: 10px;
-    text-decoration: none;
-    text-align: center;
-    color: #fff;
-    background-color: #E1700F;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.book-item a:hover {
-    background-color: #d15a00;
-}
-
-.profile-sidebar img {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-}
-
