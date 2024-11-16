@@ -39,7 +39,7 @@
                 <a class="nav-link active" href="#">Change Password</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Plan</a>
+                <a class="nav-link" href="plan.php">Plan</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="help.php">Help</a>
