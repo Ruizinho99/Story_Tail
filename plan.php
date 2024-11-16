@@ -27,7 +27,7 @@
     <div class="container mt-3">
         <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
-                <a class="nav-link " href="edit_profile">Edit Profile</a>
+                <a class="nav-link " href="edit_profile.php">Edit Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">My Books</a>
