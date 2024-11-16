@@ -1,0 +1,143 @@
+/* Arquivo style.css */
+
+/* Custom CSS para ajustar o estilo */
+.navbar {
+    background-color: #E1700F;
+}
+.navbar-brand {
+    color: #fff !important;
+    font-weight: bold;
+}
+.nav-link {
+    color: #000000 !important; /* Cor preta para os links de navegação */
+}
+.search-bar {
+    max-width: 300px;
+}
+.nav-tabs {
+    border-bottom: 2px solid #000000;
+}
+.nav-tabs .nav-item {
+    margin-right: 20px;
+}
+.nav-tabs .nav-link {
+    color: #000000 !important; /* Definir a cor preta */
+    font-weight: bold;
+}
+.nav-tabs .nav-link.active {
+    border-bottom: 3px solid #000000;
+}
+.profile-sidebar {
+    text-align: center;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+}
+.profile-sidebar img {
+    width: 300px;
+    height: 300px;
+    border-radius: 100%;
+}
+.btn-warning {
+    background-color: #E1700F;
+    border-color: #E1700F;
+}
+/* Personalização da tabela */
+.pricing-table {
+    background-color: #fff;
+    border: 2px solid #E1700F;
+    border-radius: 8px;
+}
+
+.pricing-table thead th {
+    background-color: #fff8e5;
+    font-weight: bold;
+    color: #E1700F;
+    border: none;
+}
+
+.pricing-table tbody td {
+    vertical-align: middle;
+    font-size: 16px;
+    border: none;
+}
+
+.pricing-table .bg-light {
+    background-color: #fff8e5 !important;
+}
+
+/* Botões personalizados */
+.pricing-selection .btn {
+    border-width: 2px;
+    font-weight: bold;
+    color: #E1700F;
+}
+
+.pricing-selection .btn-outline-success {
+    border-color: #E1700F;
+    color: #E1700F;
+}
+
+.pricing-selection .btn-outline-success:hover {
+    background-color: #E1700F;
+    color: #fff;
+}
+
+.pricing-selection .btn-outline-warning {
+    border-color: #ffc107;
+    color: #ffc107;
+}
+
+.pricing-selection .btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.pricing-selection .btn-sm {
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+.plan-container {
+    border: 2px solid #FF7D1A;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    width: 350px; /* Ajuste conforme necessário */
+    padding: 20px;
+}
+
+.plan-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    transition: background-color 0.3s ease;
+}
+
+.plan-option:hover {
+    background-color: #e2f0d9; /* Fundo verde claro ao passar o mouse */
+}
+
+.plan-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.plan-title {
+    font-weight: bold;
+}
+
+.plan-price {
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+button.btn {
+    padding: 5px 15px;
+}

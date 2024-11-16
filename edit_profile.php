@@ -27,7 +27,7 @@
     <div class="container mt-3">
         <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Edit Profile</a>
+                <a class="nav-link active" href="edit_profile.php">Edit Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">My Books</a>
@@ -39,7 +39,7 @@
                 <a class="nav-link" href="#">Change Password</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Plan</a>
+                <a class="nav-link" href="plan.php">Plan</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="help.php">Help</a>

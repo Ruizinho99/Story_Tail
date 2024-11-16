@@ -40,10 +40,10 @@
                 <a class="nav-link" href="#">Change Password</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Plan</a>
+                <a class="nav-link" href="plan.php">Plan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="#">Help</a>
+                <a class="nav-link active" href="help.php">Help</a>
             </li>
         </ul>
     </div>
