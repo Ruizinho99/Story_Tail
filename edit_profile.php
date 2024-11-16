@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=lock" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="headers.css">
     <title>Edit Profile - Storytails</title>
     
     <!-- Bootstrap CSS -->
@@ -12,9 +20,9 @@
     <link rel="stylesheet" href="edit_profile.css">
 </head>
 <body>
-    
-    <?php include 'header.html'; ?> 
-
+    <div>
+        <?php include 'index_header.html'; ?> 
+    </div>
     <!-- Navigation Tabs -->
     <div class="container mt-3">
         <ul class="nav nav-tabs justify-content-center">
@@ -34,7 +42,7 @@
                 <a class="nav-link" href="#">Plan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Help</a>
+                <a class="nav-link" href="help.php">Help</a>
             </li>
         </ul>
     </div>
@@ -92,5 +100,6 @@
     <div>
     <?php include 'footer.html'; ?>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
