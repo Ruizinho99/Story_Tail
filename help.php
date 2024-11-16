@@ -59,7 +59,8 @@
             background-color: #d45f0e !important; /* Um tom mais escuro para o efeito hover */
         }
     </style>
-    <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="container d-flex justify-content-center align-items-start" style="margin-top: 50px;">
+
         <div class="col-md-6">
             <h2 class="text-center custom-title mb-4">Send Us a Message</h2>
             <form action="processa.php" method="POST" class="border p-4 shadow-sm rounded">
