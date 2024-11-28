@@ -36,7 +36,7 @@
                 <a class="nav-link" href="#">Favorite Books</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Change Password</a>
+                <a class="nav-link" href="change_password.php">Change Password</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="plan.php">Plan</a>
