@@ -17,7 +17,7 @@ include_once("user_logged_in.php");
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="headers.css">
     <title>Edit Profile - Storytails</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     
@@ -58,12 +58,16 @@ include_once("user_logged_in.php");
             <!-- Sidebar -->
             <div class="col-md-3 profile-sidebar">
                 <div class="text-center">
-                    <img src="images/vski.jpeg" alt="User Image">
+                    <img src="images/vski.jpeg" alt="User Image" id="profileImage" class="rounded-circle" style="width: 150px; height: 150px;">
                     <h5 class="mt-2">Tiago VSKI</h5>
+                    
+                    <!-- Hidden File Input -->
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+
                     <div class="form-group">
-                        <button type="button" class="btn btn-warning">+ New Picture</button>
+                        <!-- Button triggers the file input -->
+                        <button type="button" class="btn btn-warning" id="uploadButton">+ New Picture</button>
                     </div>
-                
                 </div>
                 <hr>
             </div>
@@ -106,5 +110,24 @@ include_once("user_logged_in.php");
     <?php include 'footer.html'; ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // JavaScript to trigger file input click on button click
+        document.getElementById('uploadButton').addEventListener('click', function () {
+            document.getElementById('fileInput').click();
+        });
+
+        // Preview the uploaded image
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
 </html>
