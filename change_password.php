@@ -1,6 +1,6 @@
 <?php
 
-include_once("db_connection.php");
+include_once("user_logged_in.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
