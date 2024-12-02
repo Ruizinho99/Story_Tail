@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=lock" />
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="headers.css">
-    <title> Terms - Storytails</title>
+    <title> Terms - Storytail</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
 
 <div class="container my-5">
         <h1 class="text-center">Terms and Conditions</h1>
-        <p>Welcome to Storytails! By accessing or using our website, you agree to be bound by the following terms and conditions. Please read them carefully before using our services.</p>
+        <p>Welcome to Storytail! By accessing or using our website, you agree to be bound by the following terms and conditions. Please read them carefully before using our services.</p>
 
         <h2>1. Acceptance of Terms</h2>
         <p>By accessing our website, you agree to comply with these terms. If you do not agree, please refrain from using the site.</p>
@@ -48,7 +48,7 @@
         <p>These terms are governed by and construed in accordance with the laws of [Your Jurisdiction].</p>
 
         <h2>8. Contact Information</h2>
-        <p>If you have any questions regarding these terms, please contact us at <a href="mailto:support@storytails.com">support@storytails.com</a>.</p>
+        <p>If you have any questions regarding these terms, please contact us at <a href="mailto:support@storytail.com">support@storytail.com</a>.</p>
     </div>
 
 
