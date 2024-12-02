@@ -45,7 +45,7 @@
         <p>Storytails reserves the right to modify these terms at any time. Users are encouraged to review the terms periodically.</p>
 
         <h2>7. Governing Law</h2>
-        <p>These terms are governed by and construed in accordance with the laws of [Your Jurisdiction].</p>
+        <p>These terms are governed by and construed in accordance with the laws of Portugal.</p>
 
         <h2>8. Contact Information</h2>
         <p>If you have any questions regarding these terms, please contact us at <a href="mailto:support@storytail.com">support@storytail.com</a>.</p>
