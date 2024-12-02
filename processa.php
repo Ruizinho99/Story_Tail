@@ -1,4 +1,6 @@
 <?php
+
+include_once("db_connection.php");
 // Verifica se os dados foram enviados via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtém os valores do formulário
