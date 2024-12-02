@@ -1,33 +1,34 @@
+<?php
+
+include_once("user_logged_in.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Change Password - Storytails</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Font Awesome, Material Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=lock" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="headers.css">
-    <title>Change Password - Storytails</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="change_password.css">
 </head>
 <body>
-    
     <?php include 'index_header.html'; ?> 
 
     <!-- Navigation Tabs -->
     <div class="container mt-3">
         <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
-                <a class="nav-link " href="edit_profile.php">Edit Profile</a>
+                <a class="nav-link" href="edit_profile.php">Edit Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">My Books</a>
@@ -48,40 +49,45 @@
     </div>
 
     <div class="container mt-5">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-3 profile-sidebar">
-            <div class="text-center">
-                <img src="images/storytail-logo-02.png" alt="User Image">
-               
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 profile-sidebar text-center">
+                <img src="images/storytail-logo-02.png" alt="User Image" class="img-fluid">
             </div>
-            <hr>
-        </div>
 
-        <!-- Profile Edit Form -->
-        <div class="col-md-9">
-            <form>
-                <div class="form-group">
-                    <label for="Email">Email:</label>
-                    <input type="text" class="form-control" id="Email" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <label for="repeat">Repeat Password:</label>
-                    <input type="password" class="form-control" id="repeat" placeholder="Repeat Password">
-                </div>
-                <button type="button" class="btn btn-outline-secondary btn-cancel">Cancel</button>
-                <button type="submit" class="btn btn-warning">Change</button>
-            </form>
+            <!-- Separator -->
+            <div class="col-md-1 d-flex justify-content-center align-items-center">
+                <div style="border-left: 2px solid #ddd; height: 100%;"></div>
+            </div>
+
+            <!-- Profile Edit Form -->
+            <div class="col-md-8">
+                <form>
+                    <div class="form-group mb-4">
+                        <label for="Email">Email:</label>
+                        <input type="text" class="form-control" id="Email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="repeat">Repeat Password:</label>
+                        <input type="password" class="form-control" id="repeat" placeholder="Repeat Password">
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
+                        <button type="submit" class="btn btn-warning">Change</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
     <?php include 'footer.html'; ?>
-    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

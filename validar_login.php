@@ -10,7 +10,7 @@ $errorMessage = "";
 // Processar o formulário de login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usernameOrEmail = $_POST['username_or_email'];
-    $password = $_POST['password'];
+    $password = $_POST['senha'];
 
     // Usar prepared statements para evitar SQL Injection
     $stmt = $conn->prepare("SELECT * FROM users WHERE user_name = ? OR email = ?");

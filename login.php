@@ -41,7 +41,7 @@ include_once 'validar_login.php';
                     </div>
                     <div class="form-group mb-3">
                         <label for="password" class="fw-bold">Password:</label>
-                        <input type="password" id="password" name="password" class="form-control rounded" placeholder="Enter your password" required>
+                        <input type="password" id="senha" name="senha" class="form-control rounded" placeholder="Enter your password" required>
                     </div>
 
                     <button type="submit" class="btn-custom w-100 py-2 rounded">Login</button>
