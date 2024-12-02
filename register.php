@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $password = mysqli_real_escape_string($conn, $_POST['senha']);
 
     // Verificar se o nome de utilizador ou o email já existem
     $checkUserQuery = "SELECT * FROM users WHERE user_name = '$username' OR email = '$email'";
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Inserir o novo utilizador
         $userTypeId = 2;  // Todos os registos são do tipo "Free" (user_type 2)
-        $insertQuery = "INSERT INTO users (user_type_id, first_name, last_name, user_name, email, password)
+        $insertQuery = "INSERT INTO users (user_type_id, first_name, last_name, user_name, email, senha)
                         VALUES ('$userTypeId', '$first_name', '$last_name', '$username', '$email', '$hashedPassword')";
 
         if ($conn->query($insertQuery) === TRUE) {
@@ -103,7 +103,7 @@ $conn->close();
                     </div>
                     <div class="form-group mb-3">
                         <label for="password" class="fw-bold">Password:</label>
-                        <input type="password" id="password" name="password" class="form-control rounded" placeholder="Enter your password" required>
+                        <input type="password" id="senha" name="senha" class="form-control rounded" placeholder="Enter your password" required>
                     </div>
 
                     <button type="submit" class="btn-custom w-100 py-2 rounded">Register</button>
