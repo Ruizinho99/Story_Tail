@@ -1,7 +1,7 @@
 <?php
 include_once("db_connection.php");
 
-session_start(); // Certifique-se de que a sessão está iniciada aqui também
+session_start(); 
 
 if ($conn->connect_error) {
     die("Erro de conexão: " . $conn->connect_error);

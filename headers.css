@@ -1,21 +1,14 @@
 /* Estilos para o cabeçalho */
 .StHeader {
-    background-color: #E1700F;
-    /* Cor de fundo personalizada */
+    background-color: #E1700F; /* Cor de fundo personalizada */
 }
 
 .StLogo {
     font-weight: bold;
 }
 
-.StNav a {
-    font-size: 1.2rem;
-}
-
-.StNav a:hover {
-    text-decoration: underline;
-}
-
-.dropdown-menu {
-    min-width: 200px;
+.btn-outline-light:hover {
+    background-color: #fff;
+    color: #E1700F;
+    border-color: #fff;
 }
