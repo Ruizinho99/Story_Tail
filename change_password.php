@@ -17,13 +17,9 @@ include_once("user_logged_in.php");
 
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="change_password.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="headers.css">
-   
-
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Styles/style.css">
+    <link rel="stylesheet" href="Styles/headers.css">
+    <link rel="stylesheet" href="Styles/change_password.css">
 </head>
 <body>
 <?php 
