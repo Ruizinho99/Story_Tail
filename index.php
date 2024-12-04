@@ -51,7 +51,7 @@ $books = getBooks($category);
     <link rel="stylesheet" href="Styles/headers.css"> 
     <link rel="stylesheet" href="Styles/style.css">
     <link rel="stylesheet" href="Styles/index.css">
-    <title>Exemplo com iframe</title>
+    <title>StoryTail</title>
   
 </head>
 
