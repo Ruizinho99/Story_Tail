@@ -1,72 +1,79 @@
 <?php
-include_once("user_logged_in.php");
+// Inclui a conexão com o banco de dados
+include_once 'db_connection.php';
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// Inicia a sessão para verificar se o usuário está logado
+session_start();
 
+// Verifica se o usuário está logado
 if (!isset($_SESSION['user_id'])) {
-    die("Você precisa estar logado.");
+    die("Você precisa estar logado para editar o perfil.");
 }
 
 $user_id = $_SESSION['user_id'];
-include_once 'db_connection.php';
 
-if ($conn->connect_error) {
-    die("Erro de conexão: " . $conn->connect_error);
-}
-
-$_SESSION['statusMessage'] = ""; // Inicializa a mensagem de status
-
+// Verifica se os dados foram enviados via POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $firstName = $conn->real_escape_string($_POST['firstName']);
-    $lastName = $conn->real_escape_string($_POST['lastName']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $username = $conn->real_escape_string($_POST['username']);
+    // Obtém os dados do formulário
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $email = $_POST['email'];
+    $userName = $_POST['username'];
 
-    // Verifica e cria a pasta "uploads" se não existir
-    $uploadDir = 'uploads/';
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
+    // Verifica se todos os campos obrigatórios foram preenchidos
+    if (!empty($firstName) && !empty($lastName) && !empty($email) && !empty($userName)) {
+        // Atualiza o perfil no banco de dados
+        $sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, user_name = ? WHERE id = ?";
 
-    $sql = "UPDATE users SET 
-                first_name='$firstName', 
-                last_name='$lastName', 
-                email='$email', 
-                user_name='$username' 
-            WHERE id='$user_id'";
-    
-    $imageUpdated = false;
+        if ($stmt = $conn->prepare($sql)) {
+            // Bind dos parâmetros para evitar SQL injection
+            $stmt->bind_param("ssssi", $firstName, $lastName, $email, $userName, $user_id);
 
-    // Lida com o upload da imagem
-    if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] == 0) {
-        $imagePath = $uploadDir . basename($_FILES['profileImage']['name']);
-        if (move_uploaded_file($_FILES['profileImage']['tmp_name'], $imagePath)) {
-            $imagePathEscaped = $conn->real_escape_string($imagePath);
-            $sql = "UPDATE users SET 
-                        first_name='$firstName', 
-                        last_name='$lastName', 
-                        email='$email', 
-                        user_name='$username', 
-                        user_photo_url='$imagePathEscaped' 
-                    WHERE id='$user_id'";
-            $imageUpdated = true;
+            // Executa a query para atualizar os dados do usuário
+            if ($stmt->execute()) {
+                // Verifica se uma nova imagem foi enviada
+                if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] === UPLOAD_ERR_OK) {
+                    // Defina o diretório de upload
+                    $uploadDir = 'uploads/';
+                    $imageFileName = basename($_FILES['profileImage']['name']);
+                    $targetFile = $uploadDir . $imageFileName;
+
+                    // Mover o arquivo para o diretório de uploads
+                    if (move_uploaded_file($_FILES['profileImage']['tmp_name'], $targetFile)) {
+                        // Atualiza a foto do perfil no banco de dados
+                        $updateImageSql = "UPDATE users SET user_photo_url = ? WHERE id = ?";
+                        if ($stmt = $conn->prepare($updateImageSql)) {
+                            $stmt->bind_param("si", $imageFileName, $user_id);
+                            if (!$stmt->execute()) {
+                                // Captura erro de execução
+                                $_SESSION['statusMessage'] = "Erro ao atualizar a imagem no banco de dados: " . $stmt->error;
+                            }
+                        } else {
+                            $_SESSION['statusMessage'] = "Erro ao preparar a consulta SQL para atualizar a imagem.";
+                        }
+                    } else {
+                        $_SESSION['statusMessage'] = "Erro ao mover o arquivo para o diretório de uploads.";
+                    }
+                }
+                // Mensagem de sucesso
+                $_SESSION['statusMessage'] = "Perfil atualizado com sucesso!";
+            } else {
+                // Caso de erro na execução da atualização do perfil
+                $_SESSION['statusMessage'] = "Erro ao atualizar o perfil: " . $stmt->error;
+            }
+
+            // Fechar o statement
+            $stmt->close();
         } else {
-            $_SESSION['statusMessage'] = "Erro ao mover o arquivo.";
+            // Caso a consulta SQL não seja preparada corretamente
+            $_SESSION['statusMessage'] = "Erro na preparação da consulta SQL.";
         }
-    }
-
-    if ($conn->query($sql) === TRUE) {
-        $_SESSION['statusMessage'] = $imageUpdated 
-            ? "Imagem e perfil atualizados com sucesso." 
-            : "Perfil atualizado com sucesso.";
     } else {
-        $_SESSION['statusMessage'] = "Erro ao atualizar: " . $conn->error;
+        $_SESSION['statusMessage'] = "Todos os campos são obrigatórios.";
     }
-}
 
-$conn->close();
-header("Location: edit_profile.php");
-exit();
+    // Redireciona para a página de edição do perfil
+    header("Location: edit_profile.php");
+    exit();
+}
 ?>
