@@ -1,3 +1,4 @@
+
 <?php
 
 include_once("user_logged_in.php");
@@ -94,8 +95,11 @@ include_once("user_logged_in.php");
                         <label for="username">Username:</label>
                         <input type="text" class="form-control" id="username" placeholder="Enter username">
                     </div>
-                    <button type="button" class="btn btn-outline-secondary btn-cancel">Cancel</button>
-                    <button type="submit" class="btn btn-warning">Apply</button>
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
+                        <button type="submit" class="btn btn-warning">Change</button>
+                    </div>
                 </form>
             </div>
         </div>

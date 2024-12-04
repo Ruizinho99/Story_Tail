@@ -1,27 +1,42 @@
 <?php
+// Inclui lógica para obter o ID do usuário logado
+include_once("user_logged_in.php");
 
-include_once("db_connection.php");
-// Verifica se os dados foram enviados via POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtém os valores do formulário
-    $subject = $_POST['subject'];
-    $message = $_POST['message'];
-
-    // Verifica se os campos não estão vazios
-    if (!empty($subject) && !empty($message)) {
-        // Aqui você pode processar os dados, como salvar em um banco de dados ou enviar por email.
-        
-        // Exemplo de mensagem de confirmação
-        echo "<div style='padding: 20px; max-width: 600px; margin: 20px auto; font-family: Arial, sans-serif; border: 1px solid #28a745; border-radius: 5px;'>";
-        echo "<h2 style='color: #28a745;'>Mensagem Enviada com Sucesso!</h2>";
-        echo "<p><strong>Assunto:</strong> " . htmlspecialchars($subject) . "</p>";
-        echo "<p><strong>Mensagem:</strong> " . nl2br(htmlspecialchars($message)) . "</p>";
-        echo "<a href='index.html' style='color: #007bff;'>Voltar</a>";
-        echo "</div>";
-    } else {
-        echo "<h2>Por favor, preencha todos os campos.</h2>";
-    }
-} else {
-    echo "<h2>Formulário não enviado corretamente.</h2>";
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['user_id'])) {
+    die("Você precisa estar logado para enviar uma mensagem.");
+}
+
+$user_id = $_SESSION['user_id']; // Obtém o ID do usuário logado
+
+// Inclui a conexão com o banco de dados
+include_once 'db_connection.php'; // Adicionado ponto e vírgula aqui
+
+// Verifica se a conexão foi bem-sucedida
+if ($conn->connect_error) {
+    die("Erro na conexão: " . $conn->connect_error);
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Escapa os dados para evitar SQL Injection
+    $subject = $conn->real_escape_string($_POST['subject']);
+    $message = $conn->real_escape_string($_POST['message']);
+
+    // Agora, a consulta está inserindo na tabela 'request'
+    $sql = "INSERT INTO request (user_id, subject, message) VALUES ('$user_id', '$subject', '$message')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Mensagem enviada com sucesso!";
+        header("Location: help.php?status=success"); // Redireciona para 'help.php' com status de sucesso
+        exit();
+    } else {
+        echo "Erro ao enviar a mensagem: " . $conn->error;
+    }
+}
+
+$conn->close(); // Fecha a conexão com o banco de dados
 ?>

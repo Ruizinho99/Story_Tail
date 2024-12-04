@@ -57,7 +57,7 @@ include_once("user_logged_in.php");
 
             <!-- Separator -->
             <div class="col-md-1 d-flex justify-content-center align-items-center">
-                <div style="border-left: 2px solid #ddd; height: 100%;"></div>
+            <div style="border-left: 2px solid #ddd; height: 100%;"></div>
             </div>
 
             <!-- Profile Edit Form -->

@@ -29,7 +29,7 @@
 }
 .profile-sidebar {
     text-align: center;
-    border-right: 1px solid #e0e0e0;
+    border-right: 1px solid #ffffff;
     padding: 20px;
 }
 .profile-sidebar img {
@@ -79,4 +79,9 @@
 
 .form-row .form-group {
     margin-bottom: 20px; /* Espaçamento entre os campos */
+}
+.profile-sidebar img {
+    max-width: 200%; /* Para que a imagem não ultrapasse a largura do contêiner */
+    height: auto;    /* Para manter a proporção da imagem */
+    border-radius: 0; /* Remover bordas arredondadas, se houver */
 }
