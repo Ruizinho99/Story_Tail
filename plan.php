@@ -21,7 +21,7 @@ include_once("user_logged_in.php");
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="plan.css">
+    <link rel="stylesheet" href="Styles/plan.css">
 </head>
 <body>
 <?php 

@@ -1,4 +1,6 @@
 <?php
+session_start(); // Iniciar sessão
+
 include_once("db_connection.php");
 
 // Verificar se o parâmetro book_id foi passado
@@ -16,13 +18,10 @@ $sql = "SELECT
             b.cover_url,
             b.publication_year,
             b.age_group,
-            a.first_name AS author_first_name,
-            a.last_name AS author_last_name,
+            b.access_level, -- Adicionado
             AVG(r.rating) AS average_rating,
             COUNT(r.id) AS rating_count
         FROM books b
-        LEFT JOIN author_book ab ON b.id = ab.book_id
-        LEFT JOIN authors a ON ab.author_id = a.id
         LEFT JOIN ratings r ON b.id = r.book_id
         WHERE b.id = ?
         GROUP BY b.id";
@@ -91,7 +90,21 @@ $book = $result->fetch_assoc();
                         <?= htmlspecialchars($book['description']) ?>
                     </p>
                     <!-- Botão de leitura -->
-                    <a href="reading.php?book_id=<?= $book_id ?>" class="btn btn-primary">READ NOW</a>
+                    <?php if (!isset($_SESSION['user_id'])): ?>
+                        <!-- Usuário não logado: Redirecionar para login -->
+                        <a href="login.php" class="btn btn-primary">READ NOW</a>
+                    <?php else: ?>
+                        <?php if ($book['access_level'] == 0): ?>
+                            <!-- Livro público: Disponível para todos -->
+                            <a href="reading.php?book_id=<?= $book_id ?>" class="btn btn-primary">READ NOW</a>
+                        <?php elseif ($_SESSION['user_type_id'] == 3 || $_SESSION['user_type_id'] == 1): ?>
+                            <!-- Livro premium: Disponível para premium ou admin -->
+                            <a href="reading.php?book_id=<?= $book_id ?>" class="btn btn-primary">READ NOW</a>
+                        <?php else: ?>
+                            <!-- Usuário free: Redirecionar para planos -->
+                            <a href="plan.php" class="btn btn-warning" onclick="alert('Este livro está protegido. Assine um plano premium para acessar.');">READ NOW</a>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
