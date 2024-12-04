@@ -12,7 +12,7 @@ body {
 
 /* Contêiner de fundo */
 .background-container {
-    background-image: url('images/cover.png');
+    background-image: url('../images/cover.png');
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
