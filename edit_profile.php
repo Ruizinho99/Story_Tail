@@ -2,6 +2,15 @@
 <?php
 
 include_once("user_logged_in.php");
+// Script atualizaçao de perfil 
+
+if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
+    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+    echo htmlspecialchars($_SESSION['statusMessage']);
+    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+    echo "</div>";
+    unset($_SESSION['statusMessage']); // Limpa a mensagem após exibir
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,55 +64,73 @@ include_once("user_logged_in.php");
 
     <!-- Main Content -->
     <div class="container mt-5">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 profile-sidebar">
-                <div class="text-center">
-                    <img src="images/vski.jpeg" alt="User Image" id="profileImage" class="rounded-circle" style="width: 150px; height: 150px;">
-                    <h5 class="mt-2">Tiago VSKI</h5>
-                    
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 profile-sidebar">
+            <div class="text-center">
+                <img src="images/vski.jpeg" alt="User Image" id="profileImage" class="rounded-circle" style="width: 150px; height: 150px;">
+                <h5 class="mt-2">Tiago VSKI</h5>
+                
+                <!-- Form for uploading the image and updating profile details -->
+                <form id="profileForm" method="POST" enctype="multipart/form-data" action="upload_profile.php">
                     <!-- Hidden File Input -->
-                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    <input type="file" id="fileInput" name="profileImage" accept="image/*" style="display: none;">
 
                     <div class="form-group">
                         <!-- Button triggers the file input -->
                         <button type="button" class="btn btn-warning" id="uploadButton">+ New Picture</button>
                     </div>
-                </div>
-                <hr>
             </div>
+            <hr>
+        </div>
 
-            <!-- Profile Edit Form -->
-            <div class="col-md-9">
-                <h4>Edit Profile</h4>
-                <form>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="firstName">First Name:</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="lastName">Last Name:</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Enter last name">
-                        </div>
+        <!-- Profile Edit Form -->
+        <div class="col-md-9">
+            <h4>Edit Profile</h4>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name">
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                    <div class="form-group col-md-6">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter last name">
                     </div>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control" id="username" placeholder="Enter username">
-                    </div>
-                        <!-- Buttons -->
-                        <div class="d-flex justify-content-end mt-4">
-                        <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
-                        <button type="submit" class="btn btn-warning">Change</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+                </div>
+                <!-- Buttons -->
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
+                    <button type="submit" class="btn btn-warning">Change</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+
+<script>
+    // Trigger the file input when the button is clicked
+    document.getElementById('uploadButton').addEventListener('click', function () {
+        document.getElementById('fileInput').click();
+    });
+
+    // Update the image preview when a new image is selected
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            document.getElementById('profileImage').src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
+
 
     <!-- Optional JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
