@@ -112,11 +112,11 @@ $books = getBooks($category);
                                                 // Verificação do tipo de acesso ao livro
                                                 if ($book['access_level'] == 0): ?>
                                                     <!-- Livro Público (acesso 0) -->
-                                                    <a href="reading.php?book_id=<?= $book['id'] ?>" class="btn">Read</a>
+                                                    <a href="info_book.php?book_id=<?= $book['id'] ?>" class="btn">Read</a>
                                                 <?php elseif ($book['access_level'] == 1): ?>
                                                     <!-- Livro Privado (acesso 1) -->
                                                     <!-- Usuário Premium ou Gratuito pode ver Preview -->
-                                                    <a href="preview.php?book_id=<?= $book['id'] ?>" class="btn">
+                                                    <a href="info_book.php?book_id=<?= $book['id'] ?>" class="btn">
                                                         <span class="material-symbols-outlined">lock</span>
                                                         Preview
                                                     </a>

@@ -7,16 +7,26 @@
                     <div class="StLogo text-white fs-4"><a href="index.php" style="text-decoration: none; color: #fff;">STORYTAILS</a></div>
                 </div>
 
-                <!-- Navigation and User -->
-                <div class="col-auto">
-                    <nav class="StNav d-flex align-items-center">
-                        <a href="index.php" class="text-white text-decoration-none me-3">Home</a>
-                        <!-- Admin Dashboard -->
-                        <a href="admin_dashboard.php" class="btn btn-light btn-sm me-3">Admin Dashboard</a>
-                        <!-- User Dropdown -->
-                        
-                    </nav>
+                  <!-- Navigation and User -->
+            <div class="col-6 col-md-8 text-end">
+                <nav class="StNav d-inline-block me-4">
+                    <a href="index.php" class="text-white text-decoration-none">Home</a>
+                </nav>
+                <div class="dropdown d-inline-block">
+                    <a href="#" class="text-white text-decoration-none" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle fs-4"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="edit_profile.php">Edit Profile</a></li>
+                        <li><a class="dropdown-item" href="#">My Books</a></li>
+                        <li><a class="dropdown-item" href="#">Favourite Books</a></li>
+                        <li><a class="dropdown-item" href="change_password.php">Change Password</a></li>
+                        <li><a class="dropdown-item" href="plan.php">Plan</a></li>
+                        <li><a class="dropdown-item" href="help.php">Help</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                    </ul>
                 </div>
+            </div>
             </div>
         </div>
     </header>
