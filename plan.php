@@ -24,8 +24,9 @@ include_once("user_logged_in.php");
     <link rel="stylesheet" href="plan.css">
 </head>
 <body>
-    
-    <?php include 'index_header.html'; ?> 
+<?php 
+    include_once 'header_choose.php'
+    ?>
 
     <!-- Navigation Tabs -->
     <div class="container mt-3">
