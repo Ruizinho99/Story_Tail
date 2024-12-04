@@ -43,32 +43,23 @@ $books = getBooks($category);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=lock" />
     <link rel="stylesheet" href="headers.css"> 
-    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="index.css">
     <title>Exemplo com iframe</title>
-    <style>
-    </style>
+  
 </head>
 
 <body>
 
-    <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id']): 
-        
-       include_once("index_header.html")?>
-       <!-- Header com Login -->
-    <?php else: 
-        
-        include_once("sem_login.html")?>
-        <!-- Header sem Login -->
-        
-    <?php endif; ?>
+    <?php 
+    include_once 'header_choose.php'
+    ?>
 
     <div class="background-container">
         <!-- Removido o cabeçalho -->

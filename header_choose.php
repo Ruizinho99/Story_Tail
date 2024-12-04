@@ -1,7 +1,10 @@
 <?php
 include_once("db_connection.php");
 
-session_start(); 
+// Inicia a sessão apenas se não estiver já ativa
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Verifica se o usuário está logado
 if (isset($_SESSION['user_id']) && $_SESSION['user_id']) {
@@ -19,13 +22,13 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id']) {
 
         // Seleciona o header baseado no user_type_id
         if ($user_type_id == 1) {
-            include_once("admin_header.html"); // Header para admin
+            include_once("header_admin.html"); // Header para admin
         } else {
-            include_once("index_header.html"); // Header para user free e user premium
+            include_once("header_user.html"); // Header para user free e user premium
         }
     } else {
         // Caso o usuário não seja encontrado no banco de dados
-        include_once("sem_login.html");
+        include_once("header_s_login.html");
     }
 } else {
     // Header para usuários não autenticados
