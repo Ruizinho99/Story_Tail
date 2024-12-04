@@ -20,8 +20,9 @@
     <link rel="stylesheet" href="terms.css">
 </head>
 <body>
-<?php include 'index_header.html'; ?> 
-
+<?php 
+    include_once 'header_choose.php'
+    ?>
 <div class="container my-5">
         <h1 class="text-center">Terms and Conditions</h1>
         <p>Welcome to Storytail! By accessing or using our website, you agree to be bound by the following terms and conditions. Please read them carefully before using our services.</p>

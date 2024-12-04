@@ -26,8 +26,9 @@ include_once("user_logged_in.php");
 </head>
 <body>
     
-    <?php include 'index_header.html'; ?> 
-
+<?php 
+    include_once 'header_choose.php'
+    ?>
     <!-- Navigation Tabs -->
     <div class="container mt-3">
         <ul class="nav nav-tabs justify-content-center">
