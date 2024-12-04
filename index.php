@@ -76,65 +76,66 @@ $books = getBooks($category);
             </div>
         </section>
     </div>
+<!-- Seção New Books -->
+<section class="new-books-section">
+    <?php
+    echo '<link rel="stylesheet" type="text/css" href="styles/new_books.css">';
+    ?>
 
-    <!-- Seção New Books -->
-    <section class="new-books-section">
-        <?php
-        echo '<link rel="stylesheet" type="text/css" href="styles/new_books.css">';
-        ?>
+    <div class="books-section">
+        <div class="category-selector">
+            <a href="?category=New Books" class="<?= $category == 'New Books' ? 'active' : '' ?>">New Books</a>
+            <a href="?category=Our Picks" class="<?= $category == 'Our Picks' ? 'active' : '' ?>">Our Picks</a>
+            <a href="?category=Most Popular" class="<?= $category == 'Most Popular' ? 'active' : '' ?>">Most Popular</a>
+        </div>
 
-        <div class="books-section">
-            <div class="category-selector">
-                <a href="?category=New Books" class="<?= $category == 'New Books' ? 'active' : '' ?>">New Books</a>
-                <a href="?category=Our Picks" class="<?= $category == 'Our Picks' ? 'active' : '' ?>">Our Picks</a>
-                <a href="?category=Most Popular" class="<?= $category == 'Most Popular' ? 'active' : '' ?>">Most Popular</a>
-            </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <!-- Adicionando classes responsivas -->
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+                        <?php if (!empty($books)): ?>
+                            <?php foreach ($books as $index => $book): ?>
+                                <!-- Limite de exibição para 8 cartões -->
+                                <?php if ($index >= 8) break; ?>
+                                <div class="col d-flex justify-content-center">
+                                    <div class="card">
+                                        <!-- Imagem do cartão ajustada -->
+                                        <img src="<?= htmlspecialchars($book['cover_url']) ?>" class="card-img-top" alt="<?= htmlspecialchars($book['title']) ?>">
 
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-10">
-                        <div class="row row-cols-1 row-cols-md-4 g-3">
-                            <?php if (!empty($books)): ?>
-                                <?php foreach ($books as $index => $book): ?>
-                                    <!-- Limite de exibição para 8 cartões -->
-                                    <?php if ($index >= 8) break; ?>
-                                    <div class="col d-flex justify-content-center">
-                                        <div class="card">
-                                            <!-- Imagem do cartão ajustada -->
-                                            <img src="<?= htmlspecialchars($book['cover_url']) ?>" class="card-img-top" alt="<?= htmlspecialchars($book['title']) ?>">
+                                        <!-- Corpo do cartão com fundo preto semitransparente -->
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?= htmlspecialchars($book['title']) ?></h5>
 
-                                            <!-- Corpo do cartão com fundo preto semitransparente -->
-                                            <div class="card-body">
-                                                <h5 class="card-title"><?= htmlspecialchars($book['title']) ?></h5>
-
-                                                <div class="d-flex justify-content-center">
-                                                    <?php
-                                                    // Verificação do tipo de acesso ao livro
-                                                    if ($book['access_level'] == 0): ?>
-                                                        <!-- Livro Público (acesso 0) -->
-                                                        <a href="reading.php?book_id=<?= $book['id'] ?>" class="btn">Read</a>
-                                                    <?php elseif ($book['access_level'] == 1): ?>
-                                                        <!-- Livro Privado (acesso 1) -->
-                                                        <!-- Usuário Premium ou Gratuito pode ver Preview -->
-                                                        <a href="preview.php?book_id=<?= $book['id'] ?>" class="btn">
-                                                            <span class="material-symbols-outlined">lock</span>
-                                                            Preview
-                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
+                                            <div class="d-flex justify-content-center">
+                                                <?php
+                                                // Verificação do tipo de acesso ao livro
+                                                if ($book['access_level'] == 0): ?>
+                                                    <!-- Livro Público (acesso 0) -->
+                                                    <a href="reading.php?book_id=<?= $book['id'] ?>" class="btn">Read</a>
+                                                <?php elseif ($book['access_level'] == 1): ?>
+                                                    <!-- Livro Privado (acesso 1) -->
+                                                    <!-- Usuário Premium ou Gratuito pode ver Preview -->
+                                                    <a href="preview.php?book_id=<?= $book['id'] ?>" class="btn">
+                                                        <span class="material-symbols-outlined">lock</span>
+                                                        Preview
+                                                    </a>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <p>Nenhum livro encontrado para a categoria selecionada.</p>
-                            <?php endif; ?>
-                        </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>Nenhum livro encontrado para a categoria selecionada.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <?php include 'footer.html'; ?>
 

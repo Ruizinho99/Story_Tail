@@ -32,6 +32,6 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id']) {
     }
 } else {
     // Header para usuários não autenticados
-    include_once("sem_login.html");
+    include_once("header_s_login.html");
 }
 ?>
