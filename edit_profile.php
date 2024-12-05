@@ -49,7 +49,9 @@ if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=lock" />
     <link rel="stylesheet" href="Styles/headers.css">
+    <link rel="stylesheet" href="Styles/edit_profile.css">
     <title>Edit Profile - Storytails</title>
+  
 </head>
 <body>
 <?php include_once 'header_choose.php'; ?>
