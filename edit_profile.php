@@ -63,7 +63,7 @@ if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
             <a class="nav-link active" href="#">Edit Profile</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">My Books</a>
+            <a class="nav-link" href="my_books.php">My Books</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Favorite Books</a>
