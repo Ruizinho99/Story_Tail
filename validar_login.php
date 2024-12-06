@@ -8,7 +8,7 @@ $successMessage = "";
 $errorMessage = "";
 
 // Processar o formulário de login
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['username_or_email']) && isset($_POST['senha'])) {
     $usernameOrEmail = $_POST['username_or_email'];
     $password = $_POST['senha'];
 
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         // O utilizador existe, verificar a password
         $user = $result->fetch_assoc();
-        if (password_verify($password, $user['senha'])) { // Alterei para 'senha'
+        if (password_verify($password, $user['senha'])) {
             // Password correta, redirecionar para a página inicial
             session_start();
             $_SESSION['user_id'] = $user['id'];
@@ -38,6 +38,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorMessage = "Username ou password incorreta.";
     }
 }
-
-$conn->close();
 ?>
