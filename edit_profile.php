@@ -46,12 +46,9 @@ if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=lock" />
     <link rel="stylesheet" href="Styles/headers.css">
     <link rel="stylesheet" href="Styles/edit_profile.css">
     <title>Edit Profile - Storytails</title>
-  
 </head>
 <body>
 <?php include_once 'header_choose.php'; ?>
@@ -153,12 +150,8 @@ if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
 </script>
 
 <!-- Optional JavaScript -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <?php include 'footer.html'; ?>
-
 </body>
 </html>
