@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Consulta os livros favoritos do usuário
-$sql = "SELECT b.cover_image, b.title, b.author
+$sql = "SELECT b.id, b.cover_image, b.title, b.author
         FROM favorite_books fb
         JOIN books b ON fb.book_id = b.id
         WHERE fb.user_id = ?";
@@ -40,13 +40,11 @@ if ($result->num_rows > 0) {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    
     <title>Favorite Books - Storytails</title>
 </head>
 <body>
 <?php include_once 'header_choose.php'; ?>
 
-<!-- Navigation Tabs -->
 <div class="container mt-3">
     <ul class="nav nav-tabs justify-content-center">
         <li class="nav-item">
@@ -70,7 +68,6 @@ if ($result->num_rows > 0) {
     </ul>
 </div>
 
-<!-- Main Content -->
 <section class="container mt-5">
     <h2 class="text-center">Favorite Books</h2>
     <table class="table table-striped mt-4">
@@ -87,7 +84,7 @@ if ($result->num_rows > 0) {
                 <?php foreach ($fav_books as $book): ?>
                     <tr>
                         <td>
-                            <img src="<?php echo htmlspecialchars($book['cover_image']); ?>" alt="Book Cover" class="book-cover">
+                            <img src="<?php echo htmlspecialchars($book['cover_image']); ?>" alt="Book Cover" class="book-cover" style="width: 50px; height: auto;">
                         </td>
                         <td><?php echo htmlspecialchars($book['title']); ?></td>
                         <td><?php echo htmlspecialchars($book['author']); ?></td>
@@ -105,10 +102,7 @@ if ($result->num_rows > 0) {
     </table>
 </section>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <?php include 'footer.html'; ?>
 </body>
 </html>
