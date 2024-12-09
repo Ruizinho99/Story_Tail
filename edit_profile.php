@@ -27,6 +27,9 @@ if ($result->num_rows > 0) {
     die("Usuário não encontrado.");
 }
 
+// Define uma imagem padrão se a URL da foto do usuário for nula
+$profileImageUrl = $userPhotoUrl ? 'uploads/' . $userPhotoUrl : 'images/profile.png';
+
 // Exibe a mensagem de sucesso, se existir
 if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
@@ -63,7 +66,7 @@ if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
             <a class="nav-link" href="my_books.php">My Books</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="favorite_books.php">Favorite Books</a>
+            <a class="nav-link" href="favorite_books.php">Favourite Books</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="change_password.php">Change Password</a>
@@ -84,7 +87,7 @@ if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
         <div class="col-md-3 profile-sidebar">
             <div class="text-center">
                 <!-- Exibe a foto de perfil do usuário ou imagem padrão -->
-                <img src="<?php echo $userPhotoUrl ? 'uploads/' . $userPhotoUrl : 'images/default-profile.png'; ?>" alt="User Image" id="profileImage" class="rounded-circle" style="width: 150px; height: 150px;">
+                <img src="<?php echo htmlspecialchars($profileImageUrl); ?>" alt="User Image" id="profileImage" class="rounded-circle" style="width: 150px; height: 150px;">
                 <h5 class="mt-2"><?php echo htmlspecialchars($firstName); ?></h5>
                 
                 <!-- Form for uploading the image and updating profile details -->
