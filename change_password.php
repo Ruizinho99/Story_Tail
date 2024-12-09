@@ -2,16 +2,32 @@
 include_once("user_logged_in.php"); // Certifica-se de que o usuário está logado
 include_once("db_connection.php"); // Conexão com a base de dados
 
+// Obter o ID do usuário logado da sessão
+$userId = $_SESSION['user_id'];
+
+// Recuperar o email do usuário logado
+$query = "SELECT email FROM users WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+    $userEmail = $user['email'];
+} else {
+    $userEmail = ""; // Caso algo dê errado, deixe vazio
+}
+
+$stmt->close();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Dados enviados pelo formulário
     $currentPassword = $_POST['password'];
     $newPassword = $_POST['new_password'];
 
-    // ID do usuário logado, obtido da sessão
-    $userId = $_SESSION['user_id'];
-
     // Recuperar informações do usuário logado
-    $query = "SELECT email, senha FROM users WHERE id = ?";
+    $query = "SELECT senha FROM users WHERE id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $userId);
     $stmt->execute();
@@ -23,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $user = $result->fetch_assoc();
-    $email = $user['email'];
     $hashedPassword = $user['senha'];
 
     // Verificar se a senha atual está correta
@@ -90,7 +105,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
             <a class="nav-link" href="my_books.php">My Books</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="favorite_books.php">Favorite Books</a>
+            <a class="nav-link" href="favorite_books.php">Favourite Books</a>
         </li>
         <li class="nav-item">
             <a class="nav-link active" href="#">Change Password</a>
@@ -121,7 +136,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
             <form action="change_password.php" method="POST">
                 <div class="form-group mb-4">
                     <label for="Email">Email:</label>
-                    <input type="text" class="form-control" name="email" id="Email" placeholder="Enter email" required>
+                    <input type="text" class="form-control" name="email" id="Email" value="<?php echo htmlspecialchars($userEmail); ?>" readonly>
                 </div>
                 <div class="form-group mb-4">
                     <label for="password">Password:</label>
@@ -153,7 +168,6 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
         }
     }, 5000); // 5000 ms = 5 segundos
 </script>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

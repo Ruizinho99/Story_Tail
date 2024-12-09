@@ -11,8 +11,8 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Consulta os livros favoritos do usuário
-$sql = "SELECT b.id, b.cover_image, b.title, b.author
-        FROM favorite_books fb
+$sql = "SELECT b.id, b.cover_url, b.title, b.author
+        FROM favourite_books fb
         JOIN books b ON fb.book_id = b.id
         WHERE fb.user_id = ?";
 $stmt = $conn->prepare($sql);
@@ -35,11 +35,11 @@ if ($result->num_rows > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Styles/style.css">
-    <link rel="stylesheet" href="Styles/headers.css">
-    <link rel="stylesheet" href="Styles/favorite_books.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="Styles/headers.css">
+    <link rel="stylesheet" href="Styles/favorite_books.css">
     <title>Favorite Books - Storytails</title>
 </head>
 <body>
@@ -54,7 +54,7 @@ if ($result->num_rows > 0) {
             <a class="nav-link" href="my_books.php">My Books</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="favorite_books.php">Favorite Books</a>
+            <a class="nav-link active" href="favorite_books.php">Favourite Books</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="change_password.php">Change Password</a>

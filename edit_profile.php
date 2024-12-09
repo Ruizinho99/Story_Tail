@@ -28,6 +28,9 @@ if ($result->num_rows > 0) {
     die("Usuário não encontrado.");
 }
 
+// Define uma imagem padrão se a URL da foto do usuário for nula
+$profileImageUrl = $userPhotoUrl ? 'uploads/' . $userPhotoUrl : 'images/profile.png';
+
 // Exibe a mensagem de sucesso, se existir
 if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
@@ -113,7 +116,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage']) && $_
             </li>
         </ul>
     </div>
+<!-- Navigation Tabs -->
+<div class="container mt-3">
+    <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="my_books.php">My Books</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="favorite_books.php">Favourite Books</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="change_password.php">Change Password</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="plan.php">Plan</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="help.php">Help</a>
+        </li>
+    </ul>
+</div>
 
+<!-- Main Content -->
+<section class="container mt-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 profile-sidebar">
+            <div class="text-center">
+                <!-- Exibe a foto de perfil do usuário ou imagem padrão -->
+                <img src="<?php echo htmlspecialchars($profileImageUrl); ?>" alt="User Image" id="profileImage" class="rounded-circle" style="width: 150px; height: 150px;">
+                <h5 class="mt-2"><?php echo htmlspecialchars($firstName); ?></h5>
+                
+                <!-- Form for uploading the image and updating profile details -->
+                <form id="profileForm" method="POST" enctype="multipart/form-data" action="upload_profile.php">
+                    <!-- Hidden File Input -->
+                    <input type="file" id="fileInput" name="profileImage" accept="image/*" style="display: none;">
+                    <div class="form-group">
+                        <!-- Botão que dispara o input de arquivo -->
+                        <button type="button" class="btn btn-warning" id="uploadButton">+ New Picture</button>
+                    </div>
+                </form>
     <!-- Main Content -->
     <section class="container mt-5">
         <div class="row">
@@ -172,6 +217,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage']) && $_
                         <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($userName); ?>" placeholder="Enter username">
                     </div>
 
+        <!-- Profile Edit Form -->
+        <div class="col-md-9">
+            <h4>Edit Profile</h4>
+            <form method="POST" action="upload_profile.php">
+    <div class="row">
+        <!-- Campo First Name -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" value="<?php echo htmlspecialchars($firstName); ?>" placeholder="Enter first name">
+            </div>
+        </div>
+        <!-- Campo Last Name -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" value="<?php echo htmlspecialchars($lastName); ?>" placeholder="Enter last name">
+            </div>
+        </div>
+    </div>
+    <!-- Campo Email -->
+    <div class="form-group mt-3">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="Enter email">
+    </div>
+    <!-- Campo Username -->
+    <div class="form-group mt-3">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($userName); ?>" placeholder="Enter username">
+    </div>
+
                     <!-- Buttons -->
                     <div class="d-flex justify-content-end mt-4">
                         <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
@@ -181,6 +257,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage']) && $_
             </div>
         </div>
     </section>
+    <!-- Botões -->
+    <div class="d-flex justify-content-end mt-4">
+        <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
+        <button type="submit" class="btn btn-warning">Change</button>
+    </div>
+</form>
+
+        </div>
+    </div>
+</section>
 
     <script>
         // Trigger the file input when the button is clicked
@@ -201,6 +287,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage']) && $_
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <?php include 'footer.html'; ?>
+<?php include 'footer.html'; ?>
+
 </body>
 
 </html>

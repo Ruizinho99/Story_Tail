@@ -38,7 +38,7 @@ include_once("user_logged_in.php");
                 <a class="nav-link" href="my_books.php">My Books</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="favorite_books.php">Favorite Books</a>
+                <a class="nav-link" href="favorite_books.php">Favourite Books</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="change_password.php">Change Password</a>
@@ -129,8 +129,8 @@ include_once("user_logged_in.php");
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<div>
+
     <?php include 'footer.html'; ?> 
-</div>
+
 </body>
 </html>
