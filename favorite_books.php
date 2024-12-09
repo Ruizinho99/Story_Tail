@@ -35,11 +35,11 @@ if ($result->num_rows > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Styles/style.css">
-    <link rel="stylesheet" href="Styles/headers.css">
-    <link rel="stylesheet" href="Styles/favorite_books.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="Styles/headers.css">
+    <link rel="stylesheet" href="Styles/favorite_books.css">
     <title>Favorite Books - Storytails</title>
 </head>
 <body>
