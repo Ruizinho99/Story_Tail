@@ -1,85 +1,4 @@
-```php
 <?php
-// Inclui a conexão com o banco de dados
-require_once 'db_connection.php';
-
-// Inclui o arquivo para verificar se o usuário está logado
-require_once("user_logged_in.php");
-
-// Verifica se o usuário está logado
-if (!isset($_SESSION['user_id'])) {
-    http_response_code(401);
-    die("Você precisa estar logado para editar o perfil.");
-}
-
-$user_id = $_SESSION['user_id'];
-
-// Recupera os dados do usuário
-$sql = "SELECT first_name, last_name, email, user_name, user_photo_url FROM users WHERE id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-// Verifica se o usuário existe
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-    $firstName = htmlspecialchars($user['first_name']);
-    $lastName = htmlspecialchars($user['last_name']);
-    $email = htmlspecialchars($user['email']);
-    $userName = htmlspecialchars($user['user_name']);
-    $userPhotoUrl = $user['user_photo_url'];
-} else {
-    http_response_code(404);
-    die("Usuário não encontrado.");
-}
-
-// Define uma imagem padrão se a URL da foto do usuário for nula
-$profileImageUrl = $userPhotoUrl ? 'uploads/' . basename($userPhotoUrl) : 'images/default-profile.png';
-
-// Exibe a mensagem de sucesso, se existir
-if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
-    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-    echo $_SESSION['statusMessage'];
-    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-    echo "</div>";
-    unset($_SESSION['statusMessage']); // Limpa a mensagem após exibir
-}
-
-// Processar o envio da imagem, se houver
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] == 0) {
-    $upload_dir = 'uploads/';
-    $file_name = $_FILES['profileImage']['name'];
-    $file_tmp_name = $_FILES['profileImage']['tmp_name'];
-    $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
-    $new_file_name = uniqid() . '.' . $file_extension;
-    $upload_file = $upload_dir . $new_file_name;
-
-    // Verifica se a extensão é permitida
-    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
-    if (in_array(strtolower($file_extension), $allowed_extensions)) {
-        if (move_uploaded_file($file_tmp_name, $upload_file)) {
-            $file_url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $upload_file;
-
-            // Atualiza a URL da foto no banco de dados
-            $sql_update = "UPDATE users SET user_photo_url = ? WHERE id = ?";
-            $stmt = $conn->prepare($sql_update);
-            $stmt->bind_param('si', $new_file_name, $user_id);
-            $stmt->execute();
-            $stmt->close();
-
-            // Define uma mensagem de sucesso
-            $_SESSION['statusMessage'] = "Foto de perfil atualizada com sucesso!";
-            header('Location: edit_profile.php'); // Redireciona para a página de edição de perfil
-            exit();
-        } else {
-            echo "Erro ao mover o arquivo para o diretório.";
-        }
-    } else {
-        echo "Extensão de arquivo não permitida. Apenas JPG, JPEG, PNG, e GIF são permitidos.";
-    }
-}
-```<?php
 // Inclui a conexão com o banco de dados
 include_once 'db_connection.php';
 
@@ -197,52 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage']) && $_
             </li>
         </ul>
     </div>
-<!-- Navigation Tabs -->
-<div class="container mt-3">
-    <ul class="nav nav-tabs justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Edit Profile</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="my_books.php">My Books</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="favorite_books.php">Favourite Books</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="change_password.php">Change Password</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="plan.php">Plan</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="help.php">Help</a>
-        </li>
-    </ul>
-</div>
-    <!-- Navigation Tabs -->
-    <div class="container mt-3">
-        <ul class="nav nav-tabs justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Edit Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="my_books.php">My Books</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="favorite_books.php">Favorite Books</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="change_password.php">Change Password</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="plan.php">Plan</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="help.php">Help</a>
-            </li>
-        </ul>
-    </div>
 
     <!-- Main Content -->
     <section class="container mt-5">
@@ -329,9 +202,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage']) && $_
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <?php include 'footer.html'; ?>
-<?php include 'footer.html'; ?>
 
     <?php include 'footer.html'; ?>
 </body>
