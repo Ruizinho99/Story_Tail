@@ -107,31 +107,40 @@ if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
         <div class="col-md-9">
             <h4>Edit Profile</h4>
             <form method="POST" action="upload_profile.php">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="firstName">First Name:</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" value="<?php echo htmlspecialchars($firstName); ?>" placeholder="Enter first name">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="lastName">Last Name:</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" value="<?php echo htmlspecialchars($lastName); ?>" placeholder="Enter last name">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($userName); ?>" placeholder="Enter username">
-                </div>
+    <div class="row">
+        <!-- Campo First Name -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" value="<?php echo htmlspecialchars($firstName); ?>" placeholder="Enter first name">
+            </div>
+        </div>
+        <!-- Campo Last Name -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" value="<?php echo htmlspecialchars($lastName); ?>" placeholder="Enter last name">
+            </div>
+        </div>
+    </div>
+    <!-- Campo Email -->
+    <div class="form-group mt-3">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="Enter email">
+    </div>
+    <!-- Campo Username -->
+    <div class="form-group mt-3">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($userName); ?>" placeholder="Enter username">
+    </div>
 
-                <!-- Buttons -->
-                <div class="d-flex justify-content-end mt-4">
-                    <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
-                    <button type="submit" class="btn btn-warning">Change</button>
-                </div>
-            </form>
+    <!-- Botões -->
+    <div class="d-flex justify-content-end mt-4">
+        <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
+        <button type="submit" class="btn btn-warning">Change</button>
+    </div>
+</form>
+
         </div>
     </div>
 </section>
@@ -156,5 +165,6 @@ if (isset($_SESSION['statusMessage']) && $_SESSION['statusMessage'] !== "") {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <?php include 'footer.html'; ?>
+
 </body>
 </html>
