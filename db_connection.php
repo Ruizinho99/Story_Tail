@@ -1,4 +1,4 @@
-    <?php
+<?php
     // Defina as informações de conexão
     $host = 'localhost'; // ou o IP do servidor MySQL
     $username = 'root';  // Nome de usuário do MySQL
