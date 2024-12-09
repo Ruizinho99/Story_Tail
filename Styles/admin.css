@@ -1,0 +1,69 @@
+.sidebar {
+    width: 280px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #343a40;
+    padding-top: 20px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar a {
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    text-decoration: none;
+  }
+
+  /* Cor de fundo ativa (ativo) */
+  .sidebar .nav-item.active .nav-link {
+    background-color: #E1700F;
+  }
+
+  /* Cor de hover (transparente) */
+  .sidebar a:hover {
+    background-color: rgba(225, 112, 15, 0.75); /* #E1700F com 25% de transparência */
+  }
+
+  .sidebar .nav-item.active .nav-link {
+    background-color: #E1700F;
+  }
+
+  .dropdown-menu-dark {
+    background-color: #343a40;
+  }
+
+  /* Cor de hover laranja nos itens do dropdown */
+  .dropdown-item:hover {
+    background-color: rgba(225, 112, 15, 0.75);
+  }
+
+  .main-content {
+    margin-left: 280px;
+    padding: 20px;
+  }
+
+  li {
+    padding-block: 5px;
+  }
+
+  .profile-section {
+    margin-top: 20px;
+    color: white;
+    padding-left: 10px;
+  }
+
+  .profile-options a {
+    font-size: 16px;
+    display: block;
+    padding: 5px 10px;
+    color: white;
+    text-decoration: none;
+  }
+
+  /* Cor de hover laranja nas opções do perfil */
+  .profile-options a:hover {
+    background-color: rgba(225, 112, 15, 0.75);
+    border-radius: 4px;
+  }

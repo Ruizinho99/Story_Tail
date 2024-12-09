@@ -62,15 +62,18 @@ $conn->close();
     <title>Registo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="Styles/register.css"> <!-- Usando o mesmo CSS da página de registo -->
+    <link rel="stylesheet" href="Styles/headers.css">
+    <link rel="stylesheet" href="Styles/style.css">
 </head>
 <body>
-
+<?php include_once 'header_choose.php'?>
 <div class="container-fluid centered-container">
     <section class="centered-section">
         <div class="row w-100 mb-4">
-            <div class="col-12 title-container">
-                <h2 class="me-3" style="color: #E1700f;">Registo</h2>
-                <img src="images/register.png" alt="Register Icon" style="max-width: 30px; height: auto;">
+            <div class="col-6"></div>
+            <div class="col-2 title-container">
+                <h2 class="me-3" style="color: #E1700f;">Register</h2>
+                <img src="images/register.png" alt="Register Icon" style="max-width: 145px; height: auto;">
             </div>
         </div>
 
@@ -128,5 +131,6 @@ $conn->close();
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<?php include 'footer.html'?>
 </body>
 </html>
