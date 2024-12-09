@@ -45,12 +45,16 @@ $book = $result->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($book['title']) ?> - Detalhes</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="Styles/info_book.css">
+    <link rel="stylesheet" href="Styles/headers.css">
 </head>
 
 <body>
+<?php include_once 'header_choose.php'?>
     <section class="book-details py-5">
         <div class="container">
             <h1 class="section-title text-center mb-4">ABOUT THE BOOK</h1>
@@ -111,6 +115,7 @@ $book = $result->fetch_assoc();
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <?php include 'footer.html'; ?>                   
 </body>
 
 </html>
