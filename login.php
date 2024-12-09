@@ -45,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['forgot_password_email
             $mail->isSMTP();
             $mail->Host = 'sandbox.smtp.mailtrap.io';
             $mail->SMTPAuth = true;
-            $mail->Username = 'df0094b6b9b48a'; // Substituir pelo seu Mailtrap Username
-            $mail->Password = '60b7745a3de66a'; // Substituir pelo seu Mailtrap Password
+            $mail->Username = '95f867ddc7d6e0'; // Substituir pelo seu Mailtrap Username
+            $mail->Password = 'a2cc02c5128675'; // Substituir pelo seu Mailtrap Password
             $mail->Port = 2525;
 
             $mail->setFrom('no-reply@seusite.com', 'Story Tail');
