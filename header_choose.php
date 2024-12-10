@@ -24,7 +24,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id']) {
         if ($user_type_id == 1) {
             include_once("admin_dashboard.php"); // Header para admin
         } else {
-            include_once("header_user.html"); // Header para user free e user premium
+            include_once("header_user.php"); // Header para user free e user premium
         }
     } else {
         // Caso o usuário não seja encontrado no banco de dados
