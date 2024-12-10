@@ -1,77 +1,91 @@
-<!doctype html>
-<html lang="en">
+<?php
+// Inclui a conexão com o banco de dados
+include_once 'db_connection.php';
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Sidebar</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="Styles/admin.css">
-</head>
+// Inclui o arquivo para verificar se o usuário está logado
+include_once("user_logged_in.php");
 
-<body>
+// Verifica se o usuário está logado
+if (!isset($_SESSION['user_id'])) {
+  die("Você precisa estar logado para acessar esta página.");
+}
 
-  <!-- Sidebar -->
-  <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-bg-dark">
-    <span class="fs-4">Admin Dashboard</span>
+$user_id = $_SESSION['user_id'];
 
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="admin.php" class="nav-link active" aria-current="page">
-          <svg class="bi pe-none me-2" width="16" height="16">
-            <use xlink:href="#home" />
-          </svg>
-          Home
-        </a>
-      </li>
-      <li>
-        <a href="add_books.php" class="nav-link text-white">
-          <svg class="bi pe-none me-2" width="16" height="16">
-            <use xlink:href="#speedometer2" />
-          </svg>
-          Add books
-        </a>
-      </li>
-      <li>
-        <a href="books.php" class="nav-link text-white">
-          <svg class="bi pe-none me-2" width="16" height="16">
-            <use xlink:href="#table" />
-          </svg>
-          Books
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi pe-none me-2" width="16" height="16">
-            <use xlink:href="#people-circle" />
-          </svg>
-          Help Request
-        </a>
-  </li>
-    </ul>
+// Recupera os dados do usuário, incluindo a foto de perfil
+$sql = "SELECT first_name, last_name, user_photo_url FROM users WHERE id = '$user_id'";
+$result = $conn->query($sql);
 
-    <!-- User Profile Section -->
-    <hr>
-    <div class="profile-section">
-      <div class="d-flex align-items-center">
-        <img src="https://github.com/mdo.png" alt="User Avatar" width="32" height="32" class="rounded-circle me-2">
-        <strong>mdo</strong>
-      </div>
-      <div class="profile-options mt-2">
-        <a href="#">New project...</a>
-        <a href="#">Settings</a>
-        <a href="#">Profile</a>
-        <hr class="dropdown-divider">
-        <a href="logout.php">Sign out</a>
-      </div>
+// Verifica se o usuário existe
+if ($result->num_rows > 0) {
+  $user = $result->fetch_assoc();
+  $userName = $user['first_name'] . ' ' . $user['last_name'];
+  $userPhotoUrl = $user['user_photo_url'] ? 'uploads/' . basename($user['user_photo_url']) : 'images/default-profile.png'; // Foto de perfil ou padrão
+} else {
+  $userName = 'User';
+  $userPhotoUrl = 'images/default-profile.png'; // Imagem padrão caso não tenha foto
+}
+?>
+
+<style>
+  /* Estilo para os links da navbar */
+  .navbar-nav .nav-link {
+    color: white !important;
+    /* Cor branca para os links */
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: #f8f9fa !important;
+    /* Cor branca mais suave no hover */
+  }
+
+  /* Estilo para o dropdown */
+  .navbar-nav .nav-item.dropdown .nav-link {
+    color: white !important;
+  }
+
+  .navbar-nav .nav-item.dropdown .nav-link:hover {
+    color: #f8f9fa !important;
+  }
+</style>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Admin Dashboard</a>
+    <!-- Botão de toggle para dispositivos pequenos -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Menu de navegação colapsável -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="admin.php">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="add_books.php">Add Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="books.php">Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Help Request</a>
+        </li>
+        <!-- Dropdown de perfil -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="<?php echo $userPhotoUrl; ?>" alt="User Avatar" width="32" height="32" class="rounded-circle me-2">
+            <strong><?php echo $userName; ?></strong>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="edit_admin_profile.php">Edit Profile</a></li>
+            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
+</nav>
 
-
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+<!-- Bootstrap JS e dependências -->

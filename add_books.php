@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <?php include_once 'admin_sidebar.php'; ?>
 
-    <div class="main-content">
+    
         <div class="container">
             <div class="card">
                 <div class="card-header">
@@ -146,7 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
         </div>
-    </div>
 
     <script>
         function previewImage(event) {

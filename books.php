@@ -17,40 +17,101 @@ if ($result->num_rows > 0) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="Styles/books.css">
+    <style>
+        /* Estilo do fundo escuro para a página */
+        body {
+            background-color: #2c2c2c;
+            color: white;
+        }
+
+        /* Estilo dos cards com fundo mais escuro */
+        .card {
+            max-width: 540px;
+            height: 300px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            background-color: #3a3a3a; /* Fundo mais escuro */
+            border: none; /* Remove a borda padrão */
+        }
+
+        .card:hover {
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: gray;
+        }
+
+        .card-body {
+            position: relative;
+        }
+
+        .card-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: white
+        }
+
+        /* Placeholder para imagem com proporção fixa */
+        .image-placeholder {
+            width: 100%;
+            max-width: 200px;
+            aspect-ratio: 2 / 3;
+            background-color: #1e1e1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 2px solid white;
+            border-radius: 4px;
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+    </style>
 </head>
+
 <body>
     <?php include_once 'admin_sidebar.php'; ?>
 
-    <div class="container">
+    <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-10">
-                <!-- Adicionando classes responsivas -->
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
                     <?php if (!empty($books)): ?>
                         <?php foreach ($books as $index => $book): ?>
-                            <!-- Limite de exibição para 8 cartões -->
                             <?php if ($index >= 8) break; ?>
-                            <div class="col d-flex justify-content-center">
-                                <div class="card">
-                                    <!-- Imagem do cartão ajustada -->
-                                    <img src="<?= htmlspecialchars($book['cover_url']) ?>" class="card-img-top" alt="<?= htmlspecialchars($book['title']) ?>">
-
-                                    <!-- Corpo do cartão com fundo preto semitransparente -->
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?= htmlspecialchars($book['title']) ?></h5>
-
-                                        <!-- Botão Edit abaixo do livro -->
-                                        <div class="d-flex justify-content-center mt-2">
-                                            <a href="edit_books.php?book_id=<?= $book['id'] ?>" class="btn" style="background-color:#007BFF; color:white;">Edit</a>
+                            <div class="col">
+                                <a href="edit_books.php?book_id=<?= $book['id'] ?>" class="card-link" style="text-decoration: none; color: black">
+                                    <div class="card mb-3">
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-md-4">
+                                                <!-- Placeholder para a imagem -->
+                                                <div class="image-placeholder">
+                                                    <img src="<?= htmlspecialchars($book['cover_url']) ?>" alt="<?= htmlspecialchars($book['title']) ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><?= htmlspecialchars($book['title']) ?></h5>
+                                                    <p class="card-text"><?= htmlspecialchars($book['description'] ?? 'Descrição não disponível') ?></p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
@@ -63,4 +124,5 @@ if ($result->num_rows > 0) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
