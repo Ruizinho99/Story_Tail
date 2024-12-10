@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <link rel="stylesheet" href="Styles/add_books.css">
 </head>
 <body>
-    <?php include_once 'admin_sidebar.php'; ?>
+<?php include_once 'admin_dashboard.php'; ?>
 
     <div class="main-content">
         <div class="container">

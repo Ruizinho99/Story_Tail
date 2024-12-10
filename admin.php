@@ -18,7 +18,7 @@
 
 <body>
 
-    <?php include_once 'admin_sidebar.php'; ?>
+<?php include_once 'admin_dashboard.php'; ?>
 
 
     <!-- Bootstrap JS e Popper.js -->
