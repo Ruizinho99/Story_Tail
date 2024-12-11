@@ -147,7 +147,7 @@ $years = $conn->query("SELECT DISTINCT publication_year FROM books WHERE is_acti
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                         <?php foreach ($books as $book): ?>
                             <div class="col">
-                                <div class="card">
+                                <div class="card" onclick="window.location.href='info_book.php?book_id=<?= htmlspecialchars($book['id']) ?>'">
                                     <img src="<?= htmlspecialchars($book['cover_url']) ?>" class="card-img-top" alt="<?= htmlspecialchars($book['title']) ?>">
                                     <div class="card-body">
                                         <h5 class="card-title"><?= htmlspecialchars($book['title']) ?></h5>
