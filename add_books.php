@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-<?php include_once 'admin_dashboard.php'; ?>
+<?php include_once 'header_choose.php'; ?>
 
     
         <div class="container">

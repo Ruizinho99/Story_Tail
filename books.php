@@ -84,7 +84,7 @@ if ($result->num_rows > 0) {
 </head>
 
 <body>
-    <?php include_once 'admin_dashboard.php'; ?>
+    <?php include_once 'header_choose.php'; ?>
 
     <div class="container mt-5">
         <div class="row justify-content-center">

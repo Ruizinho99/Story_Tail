@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage']) && $_
     <link rel="stylesheet" href="Styles/add_books.css">
 </head>
 
-<?php include_once 'admin_dashboard.php'; ?>
+<?php include_once 'header_choose.php'; ?>
 
     <!-- Main Content -->
     <section class="container mt-5">
