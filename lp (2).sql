@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2024 at 03:54 PM
+-- Generation Time: Dec 11, 2024 at 07:09 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -240,7 +240,7 @@ INSERT INTO `books` (`id`, `title`, `author`, `description`, `cover_url`, `book_
 (5, 'Giraffes Can\'t Dance', 'Giles Andreae', 'Charlotte\'s Web is a children\'s novel by American author E. B. White and illustrated by Garth Williams; it was published on October 15, 1952, by Harper & Brothers. The novel tells the story of a livestock pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as \"Some Pig\") in her web in order to persuade the farmer to let him live\r\n\r\nCharlotte\'s Web is a children\'s novel by American author E. B. White and illustrated by Garth Williams; it was published on October 15, 1952, by Harper & Brothers. The novel tells the story of a livestock pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as \"Some Pig\") in her web in order to persuade the farmer to let him live', 'images/Girafasdance.png', 'Giraffes_Can_t_Dance.pdf', 1999, '4-7', 1, '0', '2024-11-14 17:31:31', '2024-12-09 15:00:48'),
 (6, 'Monkey Puzzle', 'Julia Donaldson', 'Charlotte\'s Web is a children\'s novel by American author E. B. White and illustrated by Garth Williams; it was published on October 15, 1952, by Harper & Brothers. The novel tells the story of a livestock pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as \"Some Pig\") in her web in order to persuade the farmer to let him live\r\n\r\nCharlotte\'s Web is a children\'s novel by American author E. B. White and illustrated by Garth Williams; it was published on October 15, 1952, by Harper & Brothers. The novel tells the story of a livestock pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as \"Some Pig\") in her web in order to persuade the farmer to let him live', 'images/monkeypuzzle.png', 'Monkey Puzzle_Julia Donaldson.pdf', 2000, '4-7', 1, '0', '2024-11-14 17:31:31', '2024-12-09 15:01:02'),
 (7, 'Pancakes Pancakes', 'Eric Carle', 'Charlotte\'s Web is a children\'s novel by American author E. B. White and illustrated by Garth Williams; it was published on October 15, 1952, by Harper & Brothers. The novel tells the story of a livestock pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as \"Some Pig\") in her web in order to persuade the farmer to let him live\r\n\r\nCharlotte\'s Web is a children\'s novel by American author E. B. White and illustrated by Garth Williams; it was published on October 15, 1952, by Harper & Brothers. The novel tells the story of a livestock pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as \"Some Pig\") in her web in order to persuade the farmer to let him live', 'images/pancakes.png', 'Pancakes pancakes_Eric Carle.pdf', 1970, '4-7', 1, '0', '2024-11-14 17:31:31', '2024-12-09 15:00:59'),
-(8, 'The Koala Who Could', 'Rachel Bright', 'Charlotte\'s Web is a children\'s novel by American author E. B. White and illustrated by Garth Williams; it was published on October 15, 1952, by Harper & Brothers. The novel tells the story of a livestock pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as \"Some Pig\") in her web in order to persuade the farmer to let him live\r\n\r\nCharlotte\'s Web is a children\'s novel by American author E. B. White and illustrated by Garth Williams; it was published on October 15, 1952, by Harper & Brothers. The novel tells the story of a livestock pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as \"Some Pig\") in her web in order to persuade the farmer to let him live', 'images/Koalla.png', 'The koala who could.pdf', 2016, '8-12', 1, '1', '2024-11-14 17:31:31', '2024-12-09 15:01:11');
+(8, 'The Koala Who Could', 'Rachel Bright', 'Charlotte\'s Web is a children\'s novel by American author E. B. White and illustrated by Garth Williams; it was published on October 15, 1952, by Harper & Brothers. The novel tells the story of a livestock pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as \"Some Pig\") in her web in order to persuade the farmer to let him live\r\n\r\nCharlotte\'s Web is a children\'s novel by American author E. B. White and illustrated by Garth Williams; it was published on October 15, 1952, by Harper & Brothers. The novel tells the story of a livestock pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as \"Some Pig\") in her web in order to persuade the farmer to let him live', 'images/Koalla.png', 'The koala who could.pdf', 2016, '0-3', 1, '1', '2024-11-14 17:31:31', '2024-12-11 17:21:09');
 
 -- --------------------------------------------------------
 
@@ -275,6 +275,19 @@ CREATE TABLE `favorites` (
   `book_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `added_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `favourite_books`
+--
+
+CREATE TABLE `favourite_books` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `book_id` int(11) NOT NULL,
+  `added_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -361,6 +374,13 @@ CREATE TABLE `request` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `request`
+--
+
+INSERT INTO `request` (`id`, `user_id`, `subject`, `message`, `created_at`) VALUES
+(1, 10, 'General Inquiry', 'TEste', '2024-12-11 18:06:53');
+
 -- --------------------------------------------------------
 
 --
@@ -404,9 +424,22 @@ INSERT INTO `users` (`id`, `user_type_id`, `first_name`, `last_name`, `user_name
 (5, 2, 'Rui', 'Rui', 'Rui', 'Rui@rui.pt', '$2y$10$FtucxtAnnZEOnrKsC1v1xu.1s.MbStJIR67zwq3Ye.5WHTXRvb9bS', NULL, NULL, '2024-11-14 22:35:15', '2024-11-14 22:35:15'),
 (7, 2, 'r', 'r', 'r', 'r@2.com', '$2y$10$n6TCwbCiLnY5q2LRG4vhzO93aOx.KCCA8KB/NbNIWYF3efO6JuuZC', NULL, NULL, '2024-11-14 23:33:36', '2024-11-14 23:33:36'),
 (8, 2, 'Rui', 'Lopes', 'ruijorgelopes', 'ruijorgelopes9@gmail.com', '$2y$10$FYdYFHRcO6wMCPlUu57szeOd47LJSIoBJlwVhx4AW6msDzGu8YKa2', NULL, NULL, '2024-12-02 15:39:35', '2024-12-02 15:39:35'),
-(9, 2, 'Rui', 'Lopes', 'pedro', 'pedro@gmail.com', '$2y$10$4UmBPODjWVq9o5vt9wtPremsU7NB4j0p.tc8trqHwLe2ev1mcngXO', '6758579e3cb5c.png', NULL, '2024-12-02 15:40:01', '2024-12-10 15:00:46'),
+(9, 2, 'Rui', 'Lopes', 'pedro', 'pedro@gmail.com', '$2y$10$4UmBPODjWVq9o5vt9wtPremsU7NB4j0p.tc8trqHwLe2ev1mcngXO', 'http://localhost/uploads/6759d2c41d70d.jpeg', NULL, '2024-12-02 15:40:01', '2024-12-11 17:58:28'),
 (10, 1, 'Rui', 'Lopes', 'Rui Lopes', 'admin@gmail.com', '$2y$10$szEG6mF6T.kAcZBb80WlCePoT42QtQHGhBsLp20/8OJAgW/Aw9s6G', 'http://localhost/uploads/67586dcf54554.png', NULL, '2024-12-03 15:03:50', '2024-12-10 16:35:27'),
 (11, 2, 'rui', 'Lopes', 'ruizinho', 'ruijorge9@gmail.com', '$2y$10$DLZYfwtT85zWt1wo1JMwHeE.cKY6fVjSgBYGW3rlQ69UweLhRwaiu', NULL, NULL, '2024-12-03 23:51:54', '2024-12-03 23:51:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_books`
+--
+
+CREATE TABLE `user_books` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `book_id` int(11) NOT NULL,
+  `completion` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -520,6 +553,14 @@ ALTER TABLE `favorites`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `favourite_books`
+--
+ALTER TABLE `favourite_books`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `book_id` (`book_id`);
+
+--
 -- Indexes for table `plans`
 --
 ALTER TABLE `plans`
@@ -563,6 +604,14 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `user_name` (`user_name`),
   ADD UNIQUE KEY `email` (`email`),
   ADD KEY `user_type_id` (`user_type_id`);
+
+--
+-- Indexes for table `user_books`
+--
+ALTER TABLE `user_books`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `book_id` (`book_id`);
 
 --
 -- Indexes for table `user_types`
@@ -623,6 +672,12 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `favourite_books`
+--
+ALTER TABLE `favourite_books`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
@@ -638,7 +693,7 @@ ALTER TABLE `ratings`
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `subscriptions`
@@ -651,6 +706,12 @@ ALTER TABLE `subscriptions`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `user_books`
+--
+ALTER TABLE `user_books`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_types`
@@ -704,6 +765,13 @@ ALTER TABLE `favorites`
   ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `favourite_books`
+--
+ALTER TABLE `favourite_books`
+  ADD CONSTRAINT `favourite_books_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `favourite_books_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `ratings`
 --
 ALTER TABLE `ratings`
@@ -735,6 +803,13 @@ ALTER TABLE `subscriptions`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_type_id`) REFERENCES `user_types` (`id`);
+
+--
+-- Constraints for table `user_books`
+--
+ALTER TABLE `user_books`
+  ADD CONSTRAINT `user_books_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `user_books_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
