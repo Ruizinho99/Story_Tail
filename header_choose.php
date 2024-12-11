@@ -22,7 +22,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id']) {
 
         // Seleciona o header baseado no user_type_id
         if ($user_type_id == 1) {
-            include_once("admin_dashboard.php"); // Header para admin
+            include_once("admin_navbar.php"); // Header para admin
         } else {
             include_once("header_user.php"); // Header para user free e user premium
         }
