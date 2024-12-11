@@ -77,9 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['forgot_password_email
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Styles/headers.css">
+    <link rel="stylesheet" href="Styles/style.css">
     <link rel="stylesheet" href="Styles/register.css"> <!-- Usando o mesmo CSS da página de registo -->
 </head>
 <body>
+<?php include_once 'header_choose.php'?>
 <div class="container-fluid centered-container">
     <section class="centered-section">
         <div class="row w-100 mb-4">
@@ -156,5 +159,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['forgot_password_email
 <?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<?php include 'footer.html'?>
 </body>
 </html>
