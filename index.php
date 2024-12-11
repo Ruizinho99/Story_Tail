@@ -66,14 +66,14 @@
             <section class="search-section">
                 <div class="search-container">
                     <h2>Find a book</h2>
-                    <div class="search-bar">
-                        <form action="search_results.php" method="GET">
+                    <form action="search_results.php" method="GET">
+                        <div class="search-bar">             
                             <input type="text" name="query" placeholder="eg. title, type..." />
                             <button type="submit">
                                 <span class="material-icons">search</span>
                             </button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </section>
         </div>
