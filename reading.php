@@ -199,7 +199,7 @@ if ($book_id > 0) {
                     <img src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="Próxima Página">
                 </button>
             </div>
-            <button id="close-reader" class="btn btn-danger mt-3">Fechar</button>
+           <button id="close-reader" class="btn btn-danger mt-3" ><a href="javascript:history.back()" style="text-decoration: none; color:white" >Fechar</a> </button>
         </div>
     </div>
 
