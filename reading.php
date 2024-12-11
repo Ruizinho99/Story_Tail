@@ -51,76 +51,134 @@ if ($book_id > 0) {
     <link rel="stylesheet" href="Styles/headers.css">
     <link rel="stylesheet" href="Styles/style.css">
     <link rel="stylesheet" href="Styles/index.css">
-    
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
+    body {
+        background-color: #f8f9fa;
+    }
 
-        .book-container {
-            text-align: center;
-            margin-top: 20px;
-        }
+    .book-container {
+        text-align: center;
+        margin-top: 20px;
+    }
 
+    .reader {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        margin: 0px auto;
+        width: 110%;
+        max-width: 400px;
+        padding: 2px;
+        position: relative; /* Para permitir o posicionamento dos botões */
+    }
+
+    .controls {
+        position: absolute;
+        top: 50%; /* Centraliza os botões na altura */
+        transform: translateY(-50%); /* Ajusta para centralizar exatamente */
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .controls button {
+        margin: 5px;
+        border: none;
+        background-color: transparent;
+    }
+
+    /* Botão de retroceder à esquerda */
+    #prev {
+        position: absolute;
+        left: 10px; /* Posiciona à esquerda */
+    }
+
+    /* Botão de avançar à direita */
+    #next {
+        position: absolute;
+        right: 10px; /* Posiciona à direita */
+    }
+
+    .controls img {
+        width: 30px;
+    }
+
+    /* Botões invisíveis para ocupar a altura toda */
+    .invisible-btn {
+        position: absolute;
+        top: 0;
+        width: 10px; /* Largura bem pequena para os botões invisíveis */
+        height: 100%; /* Ocupa toda a altura do PDF */
+        background-color: transparent;
+        opacity: 0;
+        z-index: 5; /* Garante que fiquem por cima do PDF */
+    }
+
+    #prev-invisible {
+        left: 0;
+    }
+
+    #next-invisible {
+        right: 0;
+    }
+
+    canvas {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* Media Queries para garantir responsividade em diferentes tamanhos de tela */
+    @media (max-width: 768px) {
         .reader {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px auto;
-            width: 100%;
             max-width: 100%;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
         }
 
         .controls button {
-            margin: 5px;
-            border: none;
-            background-color: transparent;
+            width: 40px;
+            height: 40px;
         }
 
-        .controls img {
-            width: 30px;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-        }
-
-        canvas {
-            width: 100%;
-            height: auto;
-            max-width: 100%;
-            margin-bottom: 20px;
-        }
-
-        /* Media Queries para garantir responsividade em diferentes tamanhos de tela */
-        @media (max-width: 768px) {
-            .reader {
-                max-width: 100%;
-                padding: 15px;
-            }
-
-            .controls button {
-                width: 40px;
-                height: 40px;
-            }
-        }
-
-        @media (max-width: 480px) {
+        /* Ajuste para telas com altura menor */
+        @media (max-height: 600px) {
             .reader {
                 padding: 10px;
             }
 
             .controls button {
-                width: 35px;
-                height: 35px;
+                width: 30px;
+                height: 30px;
             }
         }
-    </style>
+    }
+
+    @media (max-width: 480px) {
+        .reader {
+            padding: 10px;
+        }
+
+        .controls button {
+            width: 35px;
+            height: 35px;
+        }
+
+        /* Ajuste para telas com altura menor */
+        @media (max-height: 500px) {
+            .reader {
+                padding: 5px;
+            }
+
+            .controls button {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    }
+</style>
+
 </head>
 
 <body>
@@ -160,7 +218,7 @@ if ($book_id > 0) {
         let pageNumPending = null;
 
         // Calcular a escala dinâmica com base na largura da tela
-        const scale = window.innerWidth < 768 ? 0.8 : 1.0; // Menor escala para telas pequenas
+        const scale = window.innerWidth < 768 ? 0.6 : 0.8; // Escala mais agressiva para reduzir o tamanho
 
         function renderPage(num) {
             pageIsRendering = true;
@@ -169,12 +227,24 @@ if ($book_id > 0) {
                 const viewport = page.getViewport({
                     scale
                 });
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
+                
+                // Limitar a altura do PDF para 80% da altura da janela
+                const maxHeight = window.innerHeight * 0.8;
+                const ratio = maxHeight / viewport.height;
+
+                // Ajuste a escala caso a altura ultrapasse o limite
+                const adjustedScale = scale * ratio;
+
+                const adjustedViewport = page.getViewport({
+                    scale: adjustedScale
+                });
+
+                canvas.width = adjustedViewport.width;
+                canvas.height = adjustedViewport.height;
 
                 const renderCtx = {
                     canvasContext: ctx,
-                    viewport
+                    viewport: adjustedViewport
                 };
 
                 page.render(renderCtx).promise.then(() => {
@@ -237,4 +307,4 @@ if ($book_id > 0) {
 <?php include 'footer.html'; ?>
 </body>
 
-</html>
+</html>     
