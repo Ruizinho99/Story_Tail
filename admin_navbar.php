@@ -70,7 +70,7 @@ if ($result->num_rows > 0) {
           <a class="nav-link" href="books.php">Books</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Help Request</a>
+          <a class="nav-link" href="help_request.php">Help Request</a>
         </li>
         <!-- Dropdown de perfil -->
         <li class="nav-item dropdown">
