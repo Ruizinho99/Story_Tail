@@ -1,121 +1,182 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PDF Book Reader</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-        <style>
-            .pdf-container {
-                height: 80vh;
-                overflow: hidden;
-                position: relative;
-                border: 1px solid #ddd;
-                margin-bottom: 20px;
-            }
-            .pdf-page {
-                display: none;
-                width: 100%;
-            }
-            .pdf-controls {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-top: 10px;
-            }
-            .pdf-controls button {
-                margin: 0 10px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container mt-5">
-            <h1 class="text-center">PDF Book Reader</h1>
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Upload PDF -->
-                    <input type="file" id="pdf-upload" class="form-control mb-4" accept="application/pdf" />
-                    
-                    <!-- PDF Display Area -->
-                    <div class="pdf-container" id="pdf-container">
-                        <div id="pdf-pages"></div>
-                    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitura de Livros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
 
-                    <!-- PDF Controls -->
-                    <div class="pdf-controls">
-                        <button id="prev-page" class="btn btn-primary">Previous</button>
-                        <span id="page-number" class="text-center"></span>
-                        <button id="next-page" class="btn btn-primary">Next</button>
-                    </div>
-                </div>
-            </div>
+        .reader {
+            position: fixed;
+            top: 5%;
+            left: 10%;
+            width: 80%;
+            height: 90%;
+            background-color: #fff;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .pdf-canvas {
+            width: auto;
+            height: 90%;
+            max-width: 100%;
+            max-height: 100%;
+            border: none;
+        }
+
+        .reader .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .reader button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .reader button img {
+            width: 24px;
+            height: 24px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .book-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .book-link {
+            padding: 10px;
+            border: 2px solid #ffa500;
+            background-color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #000;
+            transition: transform 0.2s;
+        }
+
+        .book-link:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <h1>Escolha um Livro para Ler</h1>
+        <button class="book-link" onclick="openReader('uploads/books/Eric_Carle_Brown_Bear_What_Do_You_See.pdf')">Ler Livro</button>
+    </div>
+
+    <div class="reader" id="reader">
+        <canvas id="pdf-render" class="pdf-canvas"></canvas>
+        <div class="controls">
+            <button id="prev" style="display: none;"><img src="https://img.icons8.com/ios-glyphs/30/000000/chevron-left.png" alt="Página Anterior"></button>
+            <button id="next"><img src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="Próxima Página"></button>
         </div>
+        <button id="close-reader" style="margin-top: 10px;">Fechar</button>
+    </div>
 
-        <script>
-            let pdfDoc = null;
-            let currentPage = 1;
-            let totalPages = 0;
-            const pdfContainer = document.getElementById('pdf-container');
-            const pdfPages = document.getElementById('pdf-pages');
-            const pageNumberElement = document.getElementById('page-number');
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script>
+        const reader = document.getElementById('reader');
+        const canvas = document.getElementById('pdf-render');
+        const ctx = canvas.getContext('2d');
+        const closeReader = document.getElementById('close-reader');
+        const prevPage = document.getElementById('prev');
+        const nextPage = document.getElementById('next');
 
-            // Load PDF
-            document.getElementById('pdf-upload').addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file && file.type === 'application/pdf') {
-                    const reader = new FileReader();
-                    reader.onload = function() {
-                        const pdfData = new Uint8Array(reader.result);
-                        pdfjsLib.getDocument(pdfData).promise.then(function(pdf) {
-                            pdfDoc = pdf;
-                            totalPages = pdf.numPages;
-                            currentPage = 1;
-                            renderPage(currentPage);
-                        });
-                    };
-                    reader.readAsArrayBuffer(file);
-                }
-            });
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageIsRendering = false;
+        let pageNumPending = null;
 
-            // Render a page from PDF
-            function renderPage(pageNum) {
-                pdfDoc.getPage(pageNum).then(function(page) {
-                    const scale = 1.5;
-                    const viewport = page.getViewport({ scale: scale });
+        const scale = 1.5;
 
-                    // Create canvas to render PDF page
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-                    pdfPages.innerHTML = ''; // Clear existing page content
-                    pdfPages.appendChild(canvas);
+        function renderPage(num) {
+            pageIsRendering = true;
 
-                    // Render page on canvas
-                    page.render({ canvasContext: context, viewport: viewport }).promise.then(function() {
-                        pageNumberElement.textContent = `Page ${pageNum} of ${totalPages}`;
-                    });
+            pdfDoc.getPage(num).then(page => {
+                const viewport = page.getViewport({ scale });
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                const renderCtx = {
+                    canvasContext: ctx,
+                    viewport
+                };
+
+                page.render(renderCtx).promise.then(() => {
+                    pageIsRendering = false;
+
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
                 });
+
+                // Control visibility of buttons
+                prevPage.style.display = num === 1 ? 'none' : 'inline-block';
+                nextPage.style.display = num === pdfDoc.numPages ? 'none' : 'inline-block';
+            });
+        }
+
+        function queueRenderPage(num) {
+            if (pageIsRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
             }
+        }
 
-            // Navigate to previous page
-            document.getElementById('prev-page').addEventListener('click', function() {
-                if (currentPage > 1) {
-                    currentPage--;
-                    renderPage(currentPage);
-                }
+        function showPrevPage() {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+
+        function showNextPage() {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+
+        function openReader(pdfUrl) {
+            pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc_ => {
+                pdfDoc = pdfDoc_;
+                reader.style.display = 'flex';
+                renderPage(pageNum);
             });
+        }
 
-            // Navigate to next page
-            document.getElementById('next-page').addEventListener('click', function() {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    renderPage(currentPage);
-                }
-            });
-        </script>
+        closeReader.addEventListener('click', () => {
+            reader.style.display = 'none';
+        });
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-    </html>
+        prevPage.addEventListener('click', showPrevPage);
+        nextPage.addEventListener('click', showNextPage);
+    </script>
+</body>
+</html>
