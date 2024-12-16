@@ -1,37 +1,71 @@
 <?php
 // Incluir a conexão com o banco de dados
 include('db_connection.php');
+require 'phpmailer/src/PHPMailer.php';
+require 'phpmailer/src/Exception.php';
+require 'phpmailer/src/SMTP.php';
 
-// Obter o ID do pedido de ajuda
-$request_id = $_GET['request_id'];
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-// Consulta para pegar as informações do pedido
-$sql = "SELECT r.subject, r.message, u.first_name, u.last_name, u.email
-        FROM request r
-        JOIN users u ON r.user_id = u.id
-        WHERE r.id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $request_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$request = $result->fetch_assoc();
+// Verificar se o formulário foi enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['response'])) {
+    // Obter o ID do pedido de ajuda e a resposta
+    $request_id = $_POST['request_id'];
+    $response = $_POST['response'];
 
-// Verifica se o pedido foi encontrado
-if (!$request) {
-    die("Pedido não encontrado.");
+    // Consulta para pegar as informações do pedido
+    $sql = "SELECT r.subject, r.message, u.first_name, u.last_name, u.email
+            FROM request r
+            JOIN users u ON r.user_id = u.id
+            WHERE r.id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $request_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $request = $result->fetch_assoc();
+
+    // Verifica se o pedido foi encontrado
+    if (!$request) {
+        die("Pedido não encontrado.");
+    }
+
+    // Enviar o e-mail com a resposta
+    $mail = new PHPMailer(true);
+
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'sandbox.smtp.mailtrap.io';  // Substitua pelo seu servidor SMTP
+        $mail->SMTPAuth = true;
+        $mail->Username = '95f867ddc7d6e0';  // Substitua pelo seu Mailtrap Username
+        $mail->Password = 'a2cc02c5128675';  // Substitua pelo seu Mailtrap Password
+        $mail->Port = 2525;
+
+        $mail->setFrom('no-reply@seusite.com', 'Story Tail');
+        $mail->addAddress($request['email']);  // E-mail do usuário
+        $mail->Subject = 'Resposta ao Pedido de Ajuda: ' . $request['subject'];
+        $mail->Body = "Olá " . $request['first_name'] . ",\n\n";
+        $mail->Body .= "Aqui está a sua resposta:\n\n";
+        $mail->Body .= $response . "\n\n";
+        $mail->Body .= "Obrigado por nos contatar.\n\n";
+        $mail->send();
+
+        $responseMessage = "Sua resposta foi enviada para o e-mail do usuário.";
+    } catch (Exception $e) {
+        $responseMessage = "Erro ao enviar o e-mail: {$mail->ErrorInfo}";
+    }
+} else {
+    $responseMessage = '';
 }
 
-// Fechar a conexão com o banco de dados
-$stmt->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.90">
     <title>Responder Pedido de Ajuda</title>
-    <!-- Incluir o link para o Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -99,11 +133,8 @@ $stmt->close();
     </style>
 </head>
 <body>
-  
-<?php include 'header_choose.php'?>
-
-
-<div class="container">
+    <?php include 'header_choose.php'?>
+    <div class="container">
         <div class="header">
             <h2>Responder ao Pedido de Ajuda</h2>
         </div>
@@ -129,10 +160,15 @@ $stmt->close();
             </div>
 
             <button type="submit" class="btn btn-submit" style="color: white">Enviar Resposta</button>
+
+            <?php if($responseMessage): ?>
+                <div class="alert alert-info mt-3" role="alert">
+                    <?php echo $responseMessage; ?>
+                </div>
+            <?php endif; ?>
         </form>
     </div>
 
-    <!-- Incluir o script do Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
     <?php include 'footer.html'?>

@@ -89,9 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <link rel="stylesheet" href="Styles/add_books.css">
 </head>
 <body>
-<?php include_once 'admin_dashboard.php'; ?>
+<?php include_once 'header_choose.php'; ?>
 
-    <div class="main-content">
         <div class="container">
             <div class="card">
                 <div class="card-header">
@@ -173,7 +172,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </div>
             </div>
         </div>
-    </div>
 
     <script>
         function previewImage(event) {

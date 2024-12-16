@@ -22,10 +22,10 @@ if ($result->num_rows > 0) {
     $userName = $user['first_name'] . ' ' . $user['last_name'];
     $userPhotoUrl = !empty($user['user_photo_url']) && file_exists('uploads/' . basename($user['user_photo_url'])) 
         ? 'uploads/' . basename($user['user_photo_url']) 
-        : 'images/default-profile.png'; // Foto de perfil ou padrão
+        : 'uploads/default-profile.png'; // Foto de perfil ou padrão
 } else {
     $userName = 'User';
-    $userPhotoUrl = 'images/default-profile.png'; // Imagem padrão caso não tenha foto
+    $userPhotoUrl = 'uploads/default-profile.png'; // Imagem padrão caso não tenha foto
 }
 ?>
 
