@@ -1,82 +1,104 @@
-    <?php
-    include_once("db_connection.php");
+<?php
+include_once("db_connection.php");
 
+if ($conn->connect_error) {
+    die("Erro de conexão: " . $conn->connect_error);
+}
 
-    if ($conn->connect_error) {
-        die("Erro de conexão: " . $conn->connect_error);
+// Função para obter livros de acordo com a categoria
+function getBooks($category)
+{
+    global $conn;
+
+    // SQL diferente baseado na "categoria"
+    if ($category == 'New Books') {
+        $sql = "SELECT id, title, cover_url, access_level 
+                FROM books 
+                WHERE is_active = 1 
+                ORDER BY added_at DESC"; // Mais recentes primeiro
+    } elseif ($category == 'Most Popular') {
+        // Livros mais populares nos últimos 3 meses
+        $sql = "
+            SELECT 
+                b.id, 
+                b.title, 
+                b.cover_url, 
+                b.access_level, 
+                AVG(r.rating) AS average_rating, 
+                COUNT(r.id) AS total_reviews
+            FROM books b
+            JOIN ratings r ON b.id = r.book_id
+            WHERE r.rating_date >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH) 
+            AND b.is_active = 1
+            GROUP BY b.id
+            ORDER BY average_rating DESC, total_reviews DESC
+            LIMIT 5"; // Limite para os 5 melhores
+    } else {
+        $sql = "SELECT id, title, cover_url, access_level 
+                FROM books 
+                WHERE is_active = 1 
+                ORDER BY RAND()"; // Ordem aleatória
     }
 
-    // Função para obter livros de acordo com a categoria
-    function getBooks($category)
-    {
-        global $conn;
+    $result = $conn->query($sql);
 
-        // SQL diferente baseado na "categoria"
-        if ($category == 'New Books') {
-            $sql = "SELECT id, title, cover_url, access_level FROM books WHERE is_active = 1 ORDER BY added_at DESC"; // Mais recentes primeiro
-        } else {
-            $sql = "SELECT id, title, cover_url, access_level FROM books WHERE is_active = 1 ORDER BY RAND()"; // Ordem aleatória
+    if ($result && $result->num_rows > 0) {
+        $books = [];
+        while ($row = $result->fetch_assoc()) {
+            $books[] = $row;
         }
-
-        $result = $conn->query($sql);
-
-        if ($result && $result->num_rows > 0) {
-            $books = [];
-            while ($row = $result->fetch_assoc()) {
-                $books[] = $row;
-            }
-            return $books;
-        } else {
-            return [];
-        }
+        return $books;
+    } else {
+        return [];
     }
+}
 
-    // Verificar categoria selecionada
-    $category = isset($_GET['category']) ? $_GET['category'] : "New Books";
-    $books = getBooks($category);
+// Verificar categoria selecionada
+$category = isset($_GET['category']) ? $_GET['category'] : "New Books";
+$books = getBooks($category);
+?>
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=lock" />
+    <link rel="stylesheet" href="Styles/headers.css">
+    <link rel="stylesheet" href="Styles/style.css">
+    <link rel="stylesheet" href="Styles/index.css">
+    <title>StoryTail</title>
+</head>
+
+<body>
+
+    <?php 
+    include_once 'header_choose.php';
     ?>
 
-    <!DOCTYPE html>
-    <html lang="pt">
+    <div class="background-container">
+        <!-- Removido o cabeçalho -->
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=lock" />
-        <link rel="stylesheet" href="Styles/headers.css"> 
-        <link rel="stylesheet" href="Styles/style.css">
-        <link rel="stylesheet" href="Styles/index.css">
-        <title>StoryTail</title>
-    
-    </head>
+        <section class="search-section">
+            <div class="search-container">
+                <h2>Find a book</h2>
+                <form action="search_results.php" method="GET">
+                    <div class="search-bar">             
+                        <input type="text" name="query" placeholder="eg. title, type..." />
+                        <button type="submit">
+                            <span class="material-icons">search</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
 
-    <body>
-
-        <?php 
-        include_once 'header_choose.php'
-        ?>
-
-        <div class="background-container">
-            <!-- Removido o cabeçalho -->
-
-            <section class="search-section">
-                <div class="search-container">
-                    <h2>Find a book</h2>
-                    <form action="search_results.php" method="GET">
-                        <div class="search-bar">             
-                            <input type="text" name="query" placeholder="eg. title, type..." />
-                            <button type="submit">
-                                <span class="material-icons">search</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </section>
-        </div>
     <!-- Seção New Books -->
     <section class="new-books-section">
         <?php
@@ -96,33 +118,42 @@
                         <!-- Adicionando classes responsivas -->
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
                             <?php if (!empty($books)): ?>
-                                <?php foreach ($books as $index => $book): ?>
-                                    <!-- Limite de exibição para 8 cartões -->
-                                    <?php if ($index >= 8) break; ?>
+                                <?php foreach ($books as $book): ?>
                                     <div class="col d-flex justify-content-center">
                                         <div class="card">
-                                            <!-- Imagem do cartão ajustada -->
                                             <img src="<?= htmlspecialchars($book['cover_url']) ?>" class="card-img-top" alt="<?= htmlspecialchars($book['title']) ?>">
 
-                                            <!-- Corpo do cartão com fundo preto semitransparente -->
                                             <div class="card-body">
                                                 <h5 class="card-title"><?= htmlspecialchars($book['title']) ?></h5>
 
                                                 <div class="d-flex justify-content-center">
-                                                    <?php
-                                                    // Verificação do tipo de acesso ao livro
-                                                    if ($book['access_level'] == 0): ?>
-                                                        <!-- Livro Público (acesso 0) -->
+                                                    <?php if ($book['access_level'] == 0): ?>
                                                         <a href="info_book.php?book_id=<?= $book['id'] ?>" class="btn">Read</a>
                                                     <?php elseif ($book['access_level'] == 1): ?>
-                                                        <!-- Livro Privado (acesso 1) -->
-                                                        <!-- Usuário Premium ou Gratuito pode ver Preview -->
                                                         <a href="info_book.php?book_id=<?= $book['id'] ?>" class="btn">
                                                             <span class="material-symbols-outlined">lock</span>
                                                             Preview
                                                         </a>
                                                     <?php endif; ?>
                                                 </div>
+
+                                                <!-- Exibir average_rating e total_reviews -->
+                                                <?php if (isset($book['average_rating'])): ?>
+                                                    <div class="rating-info">
+                                                        <span class="text-warning">
+                                                            <?php
+                                                            $average_rating = round($book['average_rating'], 1);
+                                                            for ($i = 1; $i <= 5; $i++) {
+                                                                echo $i <= $average_rating
+                                                                    ? '<i class="fas fa-star"></i>'
+                                                                    : '<i class="far fa-star"></i>';
+                                                            }
+                                                            ?>
+                                                        </span>
+                                                        <span><?= number_format($book['average_rating'], 1) ?>/5</span>
+                                                        <span>(<?= $book['total_reviews'] ?> reviews)</span>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
@@ -137,13 +168,9 @@
         </div>
     </section>
 
+    <?php include 'footer.html'; ?>
 
-        <?php include 'footer.html'; ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-
-    
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    </body>
-
-    </html>
+</html>
