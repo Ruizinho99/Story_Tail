@@ -84,7 +84,7 @@ if ($result->num_rows > 0) {
                 <?php foreach ($fav_books as $book): ?>
                     <tr>
                         <td>
-                            <img src="<?php echo htmlspecialchars($book['cover_image']); ?>" alt="Book Cover" class="book-cover" style="width: 50px; height: auto;">
+                            <img src="<?php echo htmlspecialchars($book['cover_url']); ?>" alt="Book Cover" class="book-cover" style="width: 50px; height: auto;">
                         </td>
                         <td><?php echo htmlspecialchars($book['title']); ?></td>
                         <td><?php echo htmlspecialchars($book['author']); ?></td>
@@ -99,6 +99,7 @@ if ($result->num_rows > 0) {
                 </tr>
             <?php endif; ?>
         </tbody>
+
     </table>
 </section>
 

@@ -37,6 +37,13 @@ if ($result->num_rows === 0) {
 }
 
 $book = $result->fetch_assoc();
+
+// Verificar se o livro é favorito para o usuário atual
+$is_favorite_sql = "SELECT * FROM favourite_books WHERE user_id = ? AND book_id = ?";
+$stmt_favorite = $conn->prepare($is_favorite_sql);
+$stmt_favorite->bind_param("ii", $_SESSION['user_id'], $book_id);
+$stmt_favorite->execute();
+$is_favorite = $stmt_favorite->get_result()->num_rows > 0;
 ?>
 
 <!DOCTYPE html>
@@ -111,15 +118,49 @@ $book = $result->fetch_assoc();
                             <a href="plan.php" class="btn btn-warning" onclick="alert('Este livro está protegido. Assine um plano premium para acessar.');">READ NOW</a>
                         <?php endif; ?>
                     <?php endif; ?>
+
+                    <!-- Ícone de favorito -->
+                    <button id="bookmark-button" class="btn btn-outline-secondary <?= $is_favorite ? 'active' : '' ?>" data-book-id="<?= $book_id ?>">
+                        <i class="bi <?= $is_favorite ? 'bi-bookmark-fill' : 'bi-bookmark' ?>"></i>
+                    </button>
+
+
                 </div>
             </div>
         </div>
     </section>
 
-    <script src="js/rating.js"></script> <!-- Adicionado para o JavaScript externo -->
+    <script>
+        document.getElementById('bookmark-button').addEventListener('click', function () {
+            const bookId = this.dataset.bookId;
+            const icon = this.querySelector('i');
+            const button = this;
+
+            fetch('toggle_favorite.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ book_id: bookId }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'added') {
+                        icon.classList.remove('bi-bookmark');
+                        icon.classList.add('bi-bookmark-fill');
+                        button.classList.add('active');
+                    } else if (data.status === 'removed') {
+                        icon.classList.remove('bi-bookmark-fill');
+                        icon.classList.add('bi-bookmark');
+                        button.classList.remove('active');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <?php include 'footer.html'; ?>
 </body>
 
 </html>
-
