@@ -67,8 +67,8 @@ include_once("user_logged_in.php");
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Free</td>
-                            <td class="bg-light"><span class="text-danger">&#10008;</span></td>
+                            <td>Read Free Books</td>
+                            <td class="bg-light"><span class="text-success">&#10004;</span></td>
                             <td><span class="text-success">&#10004;</span></td>
                         </tr>
                         <tr>
