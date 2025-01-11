@@ -101,23 +101,25 @@ include_once("user_logged_in.php");
                 <small class="text-success">Save 50%</small>
             </div>
             <span class="plan-price">3€ / Month</span>
-            <button class="btn btn-success btn-sm">Buy Now</button>
+            <a href="checkout.php?plan=annual" class="btn btn-success btn-sm">Buy Now</a>
         </div>
+
         <!-- Linha para o plano Mensal -->
         <div class="plan-option mb-2">
             <div class="plan-info">
                 <span class="plan-title">Monthly</span>
             </div>
             <span class="plan-price">6€ / Month</span>
-            <button class="btn btn-success btn-sm">Buy Now</button>
+            <a href="checkout.php?plan=monthly" class="btn btn-success btn-sm">Buy Now</a>
         </div>
+
         <!-- Linha para o plano Grátis -->
         <div class="plan-option mb-2">
             <div class="plan-info">
                 <span class="plan-title">Free</span>
             </div>
             <span class="plan-price">0€ / Month</span>
-            <button class="btn btn-warning btn-sm">Current</button>
+            <button class="btn btn-warning btn-sm" disabled>Current</button>
         </div>
     </div>
 </div>

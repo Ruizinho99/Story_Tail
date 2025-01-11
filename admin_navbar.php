@@ -72,6 +72,9 @@ if ($result->num_rows > 0) {
         <li class="nav-item">
           <a class="nav-link" href="help_request.php">Help Request</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="premium.php">Premium</a>
+        </li>
         <!-- Dropdown de perfil -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
