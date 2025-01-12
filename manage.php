@@ -28,7 +28,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Usuários</title>
+    <title>Manage Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="Styles/manage.css">
@@ -36,25 +36,30 @@ $result = $conn->query($sql);
 </head>
 <body>
     <div class="container py-5">
-        <h2 class="text-center">Gerenciar Usuários</h2>
+        <h2 class="text-center">Manage Users</h2>
         <table class="table table-hover table-dark mt-4">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Foto</th>
-                    <th>Nome</th>
-                    <th>Tipo de Usuário</th>
-                    <th>Ações</th>
+                    <th>Photo</th>
+                    <th>Username</th>
+                    <th>User Type</th>
+                    <th>Manage</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
+                        // Verificar a existência da foto do usuário
+                        $photoUrl = !empty($row['user_photo_url']) && file_exists('uploads/' . basename($row['user_photo_url'])) 
+                            ? 'uploads/' . basename($row['user_photo_url']) 
+                            : 'uploads/default-profile.png'; // Foto padrão
+
                         echo "
                         <tr>
                             <td>" . $row['id'] . "</td>
-                            <td><img src='" . $row['user_photo_url'] . "' alt='Foto do usuário' class='user-photo'></td>
+                            <td><img src='" . $photoUrl . "' alt='User Photo' class='img-fluid' style='width: 50px; height: 50px; border-radius: 50%;'></td>
                             <td>" . $row['user_name'] . "</td>
                             <td>" . $row['user_type_id'] . "</td>
                             <td>
@@ -63,9 +68,9 @@ $result = $conn->query($sql);
                                         <i class='fas fa-ellipsis-v'></i>
                                     </button>
                                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton" . $row['id'] . "'>
-                                        <li><a class='dropdown-item update-user-type' href='#' data-id='" . $row['id'] . "' data-type='1'>Tornar Admin</a></li>
-                                        <li><a class='dropdown-item update-user-type' href='#' data-id='" . $row['id'] . "' data-type='2'>Tornar Usuário Regular</a></li>
-                                        <li><a class='dropdown-item update-user-type' href='#' data-id='" . $row['id'] . "' data-type='3'>Tornar Usuário Premium</a></li>
+                                        <li><a class='dropdown-item update-user-type' href='#' data-id='" . $row['id'] . "' data-type='1'>Admin</a></li>
+                                        <li><a class='dropdown-item update-user-type' href='#' data-id='" . $row['id'] . "' data-type='2'>Free User</a></li>
+                                        <li><a class='dropdown-item update-user-type' href='#' data-id='" . $row['id'] . "' data-type='3'>Premium User</a></li>
                                     </ul>
                                 </div>
                             </td>
