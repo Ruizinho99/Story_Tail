@@ -1,0 +1,70 @@
+  body {
+        background-color: #1e1e1e;
+        color: #ffffff; /* Texto branco para melhor contraste */
+    }
+
+    .message {
+        max-height: 100px;
+        overflow-y: auto;
+        white-space: pre-wrap; /* Permite que o texto longo quebre linha */
+    }
+
+    .message::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .message::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 3px;
+    }
+
+    .message::-webkit-scrollbar-thumb:hover {
+        background: #aaa;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card {
+        margin: 15px 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        background-color: white; /* Fundo escuro para combinar com o tema */
+        color: black;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+    .btn-custom {
+        background-color: #E1700F;
+        border-color: #E1700F;
+    }
+
+    .btn-custom:hover {
+        background-color: #D2600C;
+        border-color: #D2600C;
+    }
+
+    h2 {
+        color: #ffffff;
+        text-align: center;
+    }
