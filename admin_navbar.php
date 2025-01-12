@@ -83,6 +83,7 @@ if ($result->num_rows > 0) {
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="edit_admin_profile.php">Edit Profile</a></li>
+            <li><a class="dropdown-item" href="manage.php">Manage Users</a></li>
             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
           </ul>
         </li>
