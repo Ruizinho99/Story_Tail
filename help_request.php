@@ -87,6 +87,7 @@ include('db_connection.php');
                     u.user_photo_url
                 FROM request r
                 JOIN users u ON r.user_id = u.id
+                WHERE r.subject != 'Plano Premium'
                 ORDER BY r.created_at DESC
             ";
 
