@@ -1,4 +1,16 @@
-<?php include 'db_connection.php';
+<?php
+include 'db_connection.php';
+session_start(); // Inicia a sessão
+
+// Pega o ID do usuário da sessão
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+
+if (!$user_id) {
+    // Se o usuário não estiver logado, exibe uma mensagem ou redireciona
+    echo "Você precisa estar logado para continuar.";
+    exit;
+}
+
 // Pega o ID do livro da URL
 $book_id = isset($_GET['book_id']) ? intval($_GET['book_id']) : 0;
 
@@ -52,133 +64,104 @@ if ($book_id > 0) {
     <link rel="stylesheet" href="Styles/style.css">
     <link rel="stylesheet" href="Styles/index.css">
     <style>
-    body {
-        background-color: #f8f9fa;
-    }
+        body {
+            background-color: #f8f9fa;
+        }
 
-    .book-container {
-        text-align: center;
-        margin-top: 20px;
-    }
+        .book-container {
+            text-align: center;
+            margin-top: 20px;
+        }
 
-    .reader {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        margin: 0px auto;
-        width: 110%;
-        max-width: 400px;
-        padding: 2px;
-        position: relative; /* Para permitir o posicionamento dos botões */
-    }
-
-    .controls {
-        position: absolute;
-        top: 50%; /* Centraliza os botões na altura */
-        transform: translateY(-50%); /* Ajusta para centralizar exatamente */
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        width: 100%;
-    }
-
-    .controls button {
-        margin: 5px;
-        border: none;
-        background-color: transparent;
-    }
-
-    /* Botão de retroceder à esquerda */
-    #prev {
-        position: absolute;
-        left: 10px; /* Posiciona à esquerda */
-    }
-
-    /* Botão de avançar à direita */
-    #next {
-        position: absolute;
-        right: 10px; /* Posiciona à direita */
-    }
-
-    .controls img {
-        width: 30px;
-    }
-
-    /* Botões invisíveis para ocupar a altura toda */
-    .invisible-btn {
-        position: absolute;
-        top: 0;
-        width: 10px; /* Largura bem pequena para os botões invisíveis */
-        height: 100%; /* Ocupa toda a altura do PDF */
-        background-color: transparent;
-        opacity: 0;
-        z-index: 5; /* Garante que fiquem por cima do PDF */
-    }
-
-    #prev-invisible {
-        left: 0;
-    }
-
-    #next-invisible {
-        right: 0;
-    }
-
-    canvas {
-        width: 100%;
-        height: auto;
-        max-width: 100%;
-        margin-bottom: 10px;
-    }
-
-    /* Media Queries para garantir responsividade em diferentes tamanhos de tela */
-    @media (max-width: 768px) {
         .reader {
-            max-width: 100%;
-            padding: 15px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin: 0px auto;
+            width: 110%;
+            max-width: 400px;
+            padding: 2px;
+            position: relative;
+        }
+
+        .controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            width: 100%;
         }
 
         .controls button {
-            width: 40px;
-            height: 40px;
+            margin: 5px;
+            border: none;
+            background-color: transparent;
         }
 
-        /* Ajuste para telas com altura menor */
-        @media (max-height: 600px) {
+        #prev {
+            position: absolute;
+            left: 10px;
+        }
+
+        #next {
+            position: absolute;
+            right: 10px;
+        }
+
+        .controls img {
+            width: 30px;
+        }
+
+        .invisible-btn {
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 100%;
+            background-color: transparent;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        #prev-invisible {
+            left: 0;
+        }
+
+        #next-invisible {
+            right: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .reader {
+                max-width: 100%;
+                padding: 15px;
+            }
+
+            .controls button {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
             .reader {
                 padding: 10px;
             }
 
             .controls button {
-                width: 30px;
-                height: 30px;
+                width: 35px;
+                height: 35px;
             }
         }
-    }
-
-    @media (max-width: 480px) {
-        .reader {
-            padding: 10px;
-        }
-
-        .controls button {
-            width: 35px;
-            height: 35px;
-        }
-
-        /* Ajuste para telas com altura menor */
-        @media (max-height: 500px) {
-            .reader {
-                padding: 5px;
-            }
-
-            .controls button {
-                width: 25px;
-                height: 25px;
-            }
-        }
-    }
-</style>
-
+    </style>
 </head>
 
 <body>
@@ -186,7 +169,7 @@ if ($book_id > 0) {
     <?php include 'header_choose.php'; ?>
     <div class="container">
         <div class="book-container">
-            <h1 class="h4"><?= htmlspecialchars($book['title']) ?></h1> <!-- Título reduzido -->
+            <h1 class="h4"><?= htmlspecialchars($book['title']) ?></h1>
         </div>
 
         <div class="reader" id="reader">
@@ -199,7 +182,8 @@ if ($book_id > 0) {
                     <img src="https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png" alt="Próxima Página">
                 </button>
             </div>
-           <button id="close-reader" class="btn btn-danger mt-3" ><a href="javascript:history.back()" style="text-decoration: none; color:white" >Fechar</a> </button>
+            <div id="page-counter" class="mt-3">Página <span id="current-page">1</span> de <span id="total-pages"></span></div>
+            <button id="close-reader" class="btn btn-danger mt-3"><a href="javascript:history.back()" style="text-decoration: none; color:white">Fechar</a></button>
         </div>
     </div>
 
@@ -211,14 +195,15 @@ if ($book_id > 0) {
         const closeReader = document.getElementById('close-reader');
         const prevPage = document.getElementById('prev');
         const nextPage = document.getElementById('next');
+        const currentPage = document.getElementById('current-page');
+        const totalPages = document.getElementById('total-pages');
 
         let pdfDoc = null;
         let pageNum = 1;
         let pageIsRendering = false;
         let pageNumPending = null;
 
-        // Calcular a escala dinâmica com base na largura da tela
-        const scale = window.innerWidth < 768 ? 0.6 : 0.8; // Escala mais agressiva para reduzir o tamanho
+        const scale = window.innerWidth < 768 ? 0.6 : 0.8;
 
         function renderPage(num) {
             pageIsRendering = true;
@@ -227,24 +212,13 @@ if ($book_id > 0) {
                 const viewport = page.getViewport({
                     scale
                 });
-                
-                // Limitar a altura do PDF para 80% da altura da janela
-                const maxHeight = window.innerHeight * 0.8;
-                const ratio = maxHeight / viewport.height;
 
-                // Ajuste a escala caso a altura ultrapasse o limite
-                const adjustedScale = scale * ratio;
-
-                const adjustedViewport = page.getViewport({
-                    scale: adjustedScale
-                });
-
-                canvas.width = adjustedViewport.width;
-                canvas.height = adjustedViewport.height;
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
 
                 const renderCtx = {
                     canvasContext: ctx,
-                    viewport: adjustedViewport
+                    viewport: viewport
                 };
 
                 page.render(renderCtx).promise.then(() => {
@@ -256,9 +230,12 @@ if ($book_id > 0) {
                     }
                 });
 
-                // Controlar visibilidade dos botões
                 prevPage.style.display = num === 1 ? 'none' : 'inline-block';
                 nextPage.style.display = num === pdfDoc.numPages ? 'none' : 'inline-block';
+
+                // Atualiza o contador de páginas
+                currentPage.textContent = num;
+                totalPages.textContent = pdfDoc.numPages;
             });
         }
 
@@ -290,21 +267,50 @@ if ($book_id > 0) {
             });
         }
 
+        function saveProgress() {
+            const data = {
+                user_id: <?= $user_id ?>, // Usando o ID do usuário dinamicamente
+                book_id: <?= $book_id ?>,
+                current_page: pageNum,
+                total_pages: pdfDoc.numPages // Envia o número total de páginas
+            };
+
+            fetch('save_progress.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message || data.error);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
         closeReader.addEventListener('click', () => {
+            saveProgress();
             reader.style.display = 'none';
         });
 
-        prevPage.addEventListener('click', showPrevPage);
-        nextPage.addEventListener('click', showNextPage);
+        prevPage.addEventListener('click', () => {
+            saveProgress();
+            showPrevPage();
+        });
 
-        // Carregar o livro automaticamente
+        nextPage.addEventListener('click', () => {
+            saveProgress();
+            showNextPage();
+        });
+
         openReader('<?= $book_url ?>');
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-
-<?php include 'footer.html'; ?>
+    <?php include 'footer.html'; ?>
 </body>
 
-</html>     
+</html>
