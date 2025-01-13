@@ -1,0 +1,53 @@
+body {
+    background-color: #F9F9F9;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+/* Estilo para campos do cartão */
+.card-input {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.card-input:focus {
+    border-color: #E1700F;
+    outline: none;
+}
+
+.btn-primary {
+    background-color: #E1700F;
+    border-color: #E1700F;
+    width: 100%;
+    padding: 12px;
+}
+
+.btn-primary:hover {
+    background-color: #D15C0A;
+    border-color: #D15C0A;
+}
+
+.btn-secondary {
+    background-color: #6C757D;
+    border-color: #6C757D;
+    width: 100%;
+    padding: 12px;
+}
+
+.btn-secondary:hover {
+    background-color: #5A6268;
+    border-color: #5A6268;
+}

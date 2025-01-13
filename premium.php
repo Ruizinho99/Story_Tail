@@ -3,7 +3,7 @@
 include_once('db_connection.php');
 
 // Verificar se o usuário é admin (user_type_id = 1)
-session_start();
+include('header_choose.php');
 if ($_SESSION['user_type_id'] != 1) {
     header("Location: index.php"); // Redireciona caso não seja admin
     exit;
@@ -68,6 +68,7 @@ $result = $conn->query($sql);
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Função para aceitar ou rejeitar um pedido
         $(".accept-btn").click(function() {

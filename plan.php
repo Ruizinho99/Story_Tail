@@ -56,7 +56,7 @@ include_once("user_logged_in.php");
         
         <div class="row justify-content-center">
             <!-- Tabela de Planos -->
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <table class="table table-bordered text-center pricing-table">
                     <thead>
                         <tr>
@@ -91,7 +91,7 @@ include_once("user_logged_in.php");
             </div>
 
         <!-- Seleção de Planos -->
-    <div class="col-md-4">
+    <div class="col-md-5">
      <div class="plan-container card p-4">
         <h5 class="text-center mb-4 font-weight-bold">Select Your Plan</h5>
         <!-- Linha para o plano Anual -->
