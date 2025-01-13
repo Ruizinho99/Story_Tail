@@ -1,0 +1,97 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.book-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.reader {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px auto;
+    width: 110%;
+    max-width: 400px;
+    padding: 2px;
+    position: relative;
+}
+
+.controls {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.controls button {
+    margin: 5px;
+    border: none;
+    background-color: transparent;
+}
+
+#prev {
+    position: absolute;
+    left: 10px;
+}
+
+#next {
+    position: absolute;
+    right: 10px;
+}
+
+.controls img {
+    width: 30px;
+}
+
+.invisible-btn {
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 100%;
+    background-color: transparent;
+    opacity: 0;
+    z-index: 5;
+}
+
+#prev-invisible {
+    left: 0;
+}
+
+#next-invisible {
+    right: 0;
+}
+
+canvas {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .reader {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .controls button {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .reader {
+        padding: 10px;
+    }
+
+    .controls button {
+        width: 35px;
+        height: 35px;
+    }
+}

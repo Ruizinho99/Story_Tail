@@ -42,6 +42,20 @@ if ($book_id > 0) {
         echo "Livro não encontrado.";
         exit;
     }
+
+    // Consulta para carregar o progresso salvo
+    $sql_progress = "SELECT current_page FROM reading_progress WHERE user_id = ? AND book_id = ?";
+    $stmt_progress = $conn->prepare($sql_progress);
+    $stmt_progress->bind_param("ii", $user_id, $book_id);
+    $stmt_progress->execute();
+    $result_progress = $stmt_progress->get_result();
+
+    $saved_page = 1; // Página padrão caso não haja progresso salvo
+    if ($result_progress->num_rows > 0) {
+        $row = $result_progress->fetch_assoc();
+        $saved_page = intval($row['current_page']);
+    }
+    $stmt_progress->close();
 } else {
     echo "ID de livro inválido.";
     exit;
@@ -63,105 +77,9 @@ if ($book_id > 0) {
     <link rel="stylesheet" href="Styles/headers.css">
     <link rel="stylesheet" href="Styles/style.css">
     <link rel="stylesheet" href="Styles/index.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
 
-        .book-container {
-            text-align: center;
-            margin-top: 20px;
-        }
+    <link rel="stylesheet" href="Styles/readings.css">
 
-        .reader {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            margin: 0px auto;
-            width: 110%;
-            max-width: 400px;
-            padding: 2px;
-            position: relative;
-        }
-
-        .controls {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-
-        .controls button {
-            margin: 5px;
-            border: none;
-            background-color: transparent;
-        }
-
-        #prev {
-            position: absolute;
-            left: 10px;
-        }
-
-        #next {
-            position: absolute;
-            right: 10px;
-        }
-
-        .controls img {
-            width: 30px;
-        }
-
-        .invisible-btn {
-            position: absolute;
-            top: 0;
-            width: 10px;
-            height: 100%;
-            background-color: transparent;
-            opacity: 0;
-            z-index: 5;
-        }
-
-        #prev-invisible {
-            left: 0;
-        }
-
-        #next-invisible {
-            right: 0;
-        }
-
-        canvas {
-            width: 100%;
-            height: auto;
-            max-width: 100%;
-            margin-bottom: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .reader {
-                max-width: 100%;
-                padding: 15px;
-            }
-
-            .controls button {
-                width: 40px;
-                height: 40px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .reader {
-                padding: 10px;
-            }
-
-            .controls button {
-                width: 35px;
-                height: 35px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -188,126 +106,125 @@ if ($book_id > 0) {
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <script>
-        const reader = document.getElementById('reader');
-        const canvas = document.getElementById('pdf-render');
-        const ctx = canvas.getContext('2d');
-        const closeReader = document.getElementById('close-reader');
-        const prevPage = document.getElementById('prev');
-        const nextPage = document.getElementById('next');
-        const currentPage = document.getElementById('current-page');
-        const totalPages = document.getElementById('total-pages');
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script>
+    const reader = document.getElementById('reader');
+    const canvas = document.getElementById('pdf-render');
+    const ctx = canvas.getContext('2d');
+    const closeReader = document.getElementById('close-reader');
+    const prevPage = document.getElementById('prev');
+    const nextPage = document.getElementById('next');
+    const currentPage = document.getElementById('current-page');
+    const totalPages = document.getElementById('total-pages');
 
-        let pdfDoc = null;
-        let pageNum = 1;
-        let pageIsRendering = false;
-        let pageNumPending = null;
+    let pdfDoc = null;
+    let pageNum = <?= $saved_page ?>; // Define a página inicial com base no progresso salvo
+    let pageIsRendering = false;
+    let pageNumPending = null;
 
-        const scale = window.innerWidth < 768 ? 0.6 : 0.8;
+    const scale = window.innerWidth < 768 ? 0.6 : 0.8;
 
-        function renderPage(num) {
-            pageIsRendering = true;
+    function renderPage(num) {
+        pageIsRendering = true;
 
-            pdfDoc.getPage(num).then(page => {
-                const viewport = page.getViewport({
-                    scale
-                });
+        pdfDoc.getPage(num).then(page => {
+            const viewport = page.getViewport({ scale });
 
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
 
-                const renderCtx = {
-                    canvasContext: ctx,
-                    viewport: viewport
-                };
-
-                page.render(renderCtx).promise.then(() => {
-                    pageIsRendering = false;
-
-                    if (pageNumPending !== null) {
-                        renderPage(pageNumPending);
-                        pageNumPending = null;
-                    }
-                });
-
-                prevPage.style.display = num === 1 ? 'none' : 'inline-block';
-                nextPage.style.display = num === pdfDoc.numPages ? 'none' : 'inline-block';
-
-                // Atualiza o contador de páginas
-                currentPage.textContent = num;
-                totalPages.textContent = pdfDoc.numPages;
-            });
-        }
-
-        function queueRenderPage(num) {
-            if (pageIsRendering) {
-                pageNumPending = num;
-            } else {
-                renderPage(num);
-            }
-        }
-
-        function showPrevPage() {
-            if (pageNum <= 1) return;
-            pageNum--;
-            queueRenderPage(pageNum);
-        }
-
-        function showNextPage() {
-            if (pageNum >= pdfDoc.numPages) return;
-            pageNum++;
-            queueRenderPage(pageNum);
-        }
-
-        function openReader(pdfUrl) {
-            pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc_ => {
-                pdfDoc = pdfDoc_;
-                reader.style.display = 'flex';
-                renderPage(pageNum);
-            });
-        }
-
-        function saveProgress() {
-            const data = {
-                user_id: <?= $user_id ?>, // Usando o ID do usuário dinamicamente
-                book_id: <?= $book_id ?>,
-                current_page: pageNum,
-                total_pages: pdfDoc.numPages // Envia o número total de páginas
+            const renderCtx = {
+                canvasContext: ctx,
+                viewport: viewport
             };
 
-            fetch('save_progress.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.message || data.error);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            page.render(renderCtx).promise.then(() => {
+                pageIsRendering = false;
+
+                if (pageNumPending !== null) {
+                    renderPage(pageNumPending);
+                    pageNumPending = null;
+                }
+            });
+
+            prevPage.style.display = num === 1 ? 'none' : 'inline-block';
+            nextPage.style.display = num === pdfDoc.numPages ? 'none' : 'inline-block';
+
+            // Atualiza o contador de páginas
+            currentPage.textContent = num;
+            totalPages.textContent = pdfDoc.numPages;
+        });
+    }
+
+    function queueRenderPage(num) {
+        if (pageIsRendering) {
+            pageNumPending = num;
+        } else {
+            renderPage(num);
         }
+    }
 
-        closeReader.addEventListener('click', () => {
-            saveProgress();
-            reader.style.display = 'none';
+    function showPrevPage() {
+        if (pageNum <= 1) return;
+        pageNum--;
+        queueRenderPage(pageNum);
+        saveProgress();
+    }
+
+    function showNextPage() {
+        if (pageNum >= pdfDoc.numPages) return;
+        pageNum++;
+        queueRenderPage(pageNum);
+        saveProgress();
+    }
+
+    function openReader(pdfUrl) {
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc_ => {
+            pdfDoc = pdfDoc_;
+            reader.style.display = 'flex';
+            renderPage(pageNum); // Começa a partir da página salva
         });
+    }
 
-        prevPage.addEventListener('click', () => {
-            saveProgress();
-            showPrevPage();
-        });
+    function saveProgress() {
+        const data = {
+            user_id: <?= $user_id ?>, // Usando o ID do usuário dinamicamente
+            book_id: <?= $book_id ?>,
+            current_page: pageNum,
+            total_pages: pdfDoc.numPages // Envia o número total de páginas
+        };
 
-        nextPage.addEventListener('click', () => {
-            saveProgress();
-            showNextPage();
-        });
+        fetch('save_progress.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message || data.error);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
-        openReader('<?= $book_url ?>');
-    </script>
+    closeReader.addEventListener('click', () => {
+        saveProgress();
+        reader.style.display = 'none';
+    });
+
+    prevPage.addEventListener('click', () => {
+        showPrevPage();
+    });
+
+    nextPage.addEventListener('click', () => {
+        showNextPage();
+    });
+
+    openReader('<?= $book_url ?>');
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <?php include 'footer.html'; ?>
