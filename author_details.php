@@ -10,7 +10,7 @@ if (!isset($_GET['author_id']) || empty($_GET['author_id'])) {
 $author_id = intval($_GET['author_id']); // Sanitizar entrada
 
 // Consulta SQL para obter informações do autor
-$sql = "SELECT first_name, last_name, description, author_photo_url, nationality FROM authors WHERE id = ?";
+$sql = "SELECT first_name, last_name, description, author_photo_url, nationality, amazon FROM authors WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $author_id);
 $stmt->execute();
@@ -54,6 +54,15 @@ $author = $result->fetch_assoc();
                 <h1><?= htmlspecialchars($author['first_name'] . ' ' . $author['last_name']) ?></h1>
                 <p><strong>Nationality:</strong> <?= htmlspecialchars($author['nationality']) ?></p>
                 <p><?= nl2br(htmlspecialchars($author['description'])) ?></p>
+
+                <?php if (!empty($author['amazon'])): ?>
+                    <p>
+                        Find more about 
+                        <strong><?= htmlspecialchars($author['first_name'] . ' ' . $author['last_name']) ?></strong> 
+                        <a href="<?= htmlspecialchars($author['amazon']) ?>" target="_blank">here</a>.
+                    </p>
+                <?php endif; ?>
+                
             </div>
         </div>
     </div>
