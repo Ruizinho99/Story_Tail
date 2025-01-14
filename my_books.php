@@ -1,8 +1,19 @@
 <?php
+// Inicia a sessão
+session_start();
+
 // Inclui a conexão com o banco de dados
 include_once 'db_connection.php';
-// Definindo o user_id estaticamente para fins de teste
-$user_id = 9;
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['user_id'])) {
+    // Redireciona para a página de login caso não esteja logado
+    header("Location: login.php");
+    exit;
+}
+
+// Obtém o user_id a partir da sessão
+$user_id = $_SESSION['user_id'];
 
 // Consulta para buscar todos os progressos de leitura do usuário
 $sql_progress = "SELECT rp.book_id, rp.current_page, rp.total_pages 
