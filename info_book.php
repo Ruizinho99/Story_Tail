@@ -11,21 +11,27 @@ if (!isset($_GET['book_id']) || empty($_GET['book_id'])) {
 $book_id = intval($_GET['book_id']); // Sanitizar entrada
 
 // Obter informações do livro
-$sql = "SELECT 
-            b.title,
-            b.author,
-            b.description,
-            b.cover_url,
-            b.publication_year,
-            b.age_group,
-            b.access_level,
-            AVG(r.rating) AS average_rating,
-            COUNT(r.id) AS rating_count,
-            (SELECT rating FROM ratings WHERE user_id = ? AND book_id = b.id) AS user_rating
-        FROM books b
-        LEFT JOIN ratings r ON b.id = r.book_id
-        WHERE b.id = ?
-        GROUP BY b.id";
+$sql = "
+    SELECT 
+        b.title,
+        b.author,
+        b.description,
+        b.cover_url,
+        b.publication_year,
+        b.age_group,
+        b.access_level,
+        AVG(r.rating) AS average_rating,
+        COUNT(r.id) AS rating_count,
+        (SELECT rating FROM ratings WHERE user_id = ? AND book_id = b.id) AS user_rating,
+        a.id AS author_id, -- Obter o ID do autor
+        CONCAT(a.first_name, ' ', a.last_name) AS author_name -- Nome completo do autor
+    FROM books b
+    LEFT JOIN authors a ON b.author = CONCAT(a.first_name, ' ', a.last_name) -- Relacionar pelo nome completo
+    LEFT JOIN ratings r ON b.id = r.book_id
+    WHERE b.id = ?
+    GROUP BY b.id;
+";
+
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $_SESSION['user_id'], $book_id);
@@ -74,7 +80,7 @@ $is_favorite = $stmt_favorite->get_result()->num_rows > 0;
                 <!-- Detalhes do livro -->
                 <div class="col-md-8">
                     <h2 class="book-title"><?= htmlspecialchars($book['title']) ?></h2>
-                    <p class="book-author">From: <span class="author-name"><?= htmlspecialchars($book['author']) ?></span></p>
+                    <p class="book-author">From: <a href="author_details.php?author_id=<?= htmlspecialchars($book['author_id']) ?>" class="author-name"><?= htmlspecialchars($book['author']) ?></a></p>
                     <!-- Rating -->
                     <div class="ratings mb-3">
                         <div id="stars-container" class="stars text-warning" data-book-id="<?= $book_id ?>" data-average-rating="<?= $book['average_rating'] ?>" data-user-rating="<?= $user_rating ?? 0 ?>">
