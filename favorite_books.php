@@ -89,7 +89,7 @@ if ($result->num_rows > 0) {
                         <td><?php echo htmlspecialchars($book['title']); ?></td>
                         <td><?php echo htmlspecialchars($book['author']); ?></td>
                         <td>
-                            <a href="read_book.php?book_id=<?php echo urlencode($book['id']); ?>" class="btn btn-warning">Read Now</a>
+                            <a href="reading.php?book_id=<?php echo urlencode($book['id']); ?>" class="btn btn-warning">Read Now</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
