@@ -136,6 +136,8 @@ $is_favorite = $stmt_favorite->get_result()->num_rows > 0;
         </div>
     </section>
 
+    <?php include 'book_carousel.php'; ?>
+
     <script>
         document.getElementById('bookmark-button').addEventListener('click', function () {
             const bookId = this.dataset.bookId;

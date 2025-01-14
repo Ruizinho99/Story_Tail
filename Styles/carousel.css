@@ -1,0 +1,33 @@
+.swiper {
+    padding: 20px 0;
+}
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.card-img-top {
+    border-radius: 10px 10px 0 0;
+}
+.btn-read-now {
+    background-color: #E1700F;
+    color: white;
+    border: none;
+}
+
+.btn-read-now:hover {
+    background-color: #cf620c;
+    color: white;
+}
