@@ -122,11 +122,11 @@ if (empty($books)) {
     <table class="table table-striped mt-4">
         <thead>
             <tr>
-                <th>Cover</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Progress</th>
-                <th>Actions</th>
+            <th style="width: 10%;">Cover</th>
+                <th style="width: 30%;">Title</th>
+                <th style="width: 15%;">Author</th>
+                <th style="width: 30%;">Progress</th>
+                <th style="width: 15%;">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -144,7 +144,7 @@ if (empty($books)) {
                         <td><?php echo htmlspecialchars($book['author']); ?></td>
                         <td>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" 
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" 
                                      style="width: <?php echo ($book['current_page'] / $book['total_pages']) * 100; ?>%;" 
                                      aria-valuenow="<?php echo $book['current_page']; ?>" 
                                      aria-valuemin="0" 
