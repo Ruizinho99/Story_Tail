@@ -50,7 +50,7 @@ if ($result->num_rows > 0) {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #E1700F;">
   <div class="container-fluid">
-    <a class="navbar-brand text-white fs-4" href="index.php">STORYTAILS</a>
+    <a class="navbar-brand text-white fs-4" href="index.php">STORYTAIL</a>
 
     <!-- Botão de toggle para dispositivos pequenos -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
