@@ -135,9 +135,8 @@ $is_favorite = $stmt_favorite->get_result()->num_rows > 0;
             </div>
         </div>
     </section>
-
+    
     <?php include 'book_carousel.php'; ?>
-
     <script>
         document.getElementById('bookmark-button').addEventListener('click', function () {
             const bookId = this.dataset.bookId;
@@ -166,6 +165,8 @@ $is_favorite = $stmt_favorite->get_result()->num_rows > 0;
                 .catch(error => console.error('Error:', error));
         });
     </script>
+
+    <script src="js/rating.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <?php include 'footer.html'; ?>

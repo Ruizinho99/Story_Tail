@@ -1,36 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
     const starsContainer = document.getElementById("stars-container");
-
     if (starsContainer) {
         const stars = starsContainer.querySelectorAll("i");
         const averageRating = parseFloat(starsContainer.dataset.averageRating);
         const bookId = starsContainer.dataset.bookId;
         const userRating = parseInt(starsContainer.dataset.userRating, 10);
-
         let currentRating = userRating || 0; // Avaliação atual do usuário, ou 0
         let isHovering = false;
-
         // Exibe as estrelas com base na média inicialmente
         updateStarsDisplay(averageRating);
-
         // Destacar estrelas ao passar o mouse
         stars.forEach((star, index) => {
             star.addEventListener("mouseover", () => {
                 isHovering = true;
                 highlightStars(index + 1);
             });
-
             star.addEventListener("mouseout", () => {
                 isHovering = false;
                 updateStarsDisplay(currentRating || averageRating); // Voltar para a média ou avaliação do usuário
             });
-
             star.addEventListener("click", () => {
                 currentRating = index + 1;
                 submitRating(bookId, currentRating);
             });
         });
-
         function highlightStars(count) {
             stars.forEach((star, index) => {
                 if (index < count) {
@@ -42,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
-
         function updateStarsDisplay(rating) {
             stars.forEach((star, index) => {
                 const isHalfStar = rating - index >= 0.5 && rating - index < 1;
@@ -58,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
-
         function submitRating(bookId, rating) {
             fetch("submit_rating.php", {
                 method: "POST",
@@ -75,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (!isHovering) {
                             updateStarsDisplay(currentRating);
                         }
+                        window.location.reload();
                     } else {
                         alert("Failed to submit rating: " + data.error);
                     }
