@@ -2,22 +2,30 @@
 // Conectar ao banco de dados
 include_once('db_connection.php');
 
-// Verificar se o usuário é admin (user_type_id = 1)
-session_start();
+include('header_choose.php');
 if ($_SESSION['user_type_id'] != 1) {
     header("Location: index.php"); // Redireciona caso não seja admin
     exit;
 }
 
-// Consulta SQL para obter informações dos usuários
+// Verificar se houve uma busca
+$search_query = "";
+if (isset($_POST['search_email'])) {
+    $search_email = $conn->real_escape_string($_POST['search_email']);
+    $search_query = " WHERE u.email LIKE '%$search_email%'"; // Adiciona filtro na busca
+}
+
+// Consulta SQL para obter informações dos usuários com filtro de busca
 $sql = "
     SELECT 
-        id, 
-        user_photo_url, 
-        user_name, 
-        user_type_id 
-    FROM users 
-    ORDER BY id ASC
+        u.id, 
+        u.user_photo_url, 
+        u.user_name, 
+        u.user_type_id, 
+        u.email
+    FROM users u
+    $search_query
+    ORDER BY u.id ASC
 ";
 
 $result = $conn->query($sql);
@@ -37,12 +45,22 @@ $result = $conn->query($sql);
 <body>
     <div class="container py-5">
         <h2 class="text-center">Manage Users</h2>
+
+        <!-- Barra de Pesquisa -->
+        <form method="POST" class="mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Pesquisar por email..." name="search_email" value="<?php echo isset($search_email) ? $search_email : ''; ?>">
+                <button class="btn btn-primary" type="submit">Pesquisar</button>
+            </div>
+        </form>
+
         <table class="table table-hover table-dark mt-4">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Photo</th>
                     <th>Username</th>
+                    <th>Email</th>
                     <th>User Type</th>
                     <th>Manage</th>
                 </tr>
@@ -61,6 +79,7 @@ $result = $conn->query($sql);
                             <td>" . $row['id'] . "</td>
                             <td><img src='" . $photoUrl . "' alt='User Photo' class='img-fluid' style='width: 50px; height: 50px; border-radius: 50%;'></td>
                             <td>" . $row['user_name'] . "</td>
+                            <td>" . $row['email'] . "</td>
                             <td>" . $row['user_type_id'] . "</td>
                             <td>
                                 <div class='dropdown'>
@@ -78,7 +97,7 @@ $result = $conn->query($sql);
                         ";
                     }
                 } else {
-                    echo "<tr><td colspan='5' class='text-center'>Nenhum usuário encontrado.</td></tr>";
+                    echo "<tr><td colspan='6' class='text-center'>Nenhum usuário encontrado.</td></tr>";
                 }
                 ?>
             </tbody>

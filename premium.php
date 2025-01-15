@@ -27,6 +27,67 @@ $sql = "
 ";
 
 $result = $conn->query($sql);
+
+// Função para aceitar a solicitação e atualizar a tabela subscriptions
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_request_id'])) {
+    $request_id = intval($_POST['accept_request_id']);
+
+    // Busca o pedido pelo ID
+    $sql_request = "SELECT user_id FROM request WHERE id = ?";
+    $stmt_request = $conn->prepare($sql_request);
+    $stmt_request->bind_param("i", $request_id);
+    $stmt_request->execute();
+    $result_request = $stmt_request->get_result();
+
+    if ($result_request->num_rows > 0) {
+        $request = $result_request->fetch_assoc();
+        $user_id = $request['user_id'];
+
+        // Adiciona ou atualiza na tabela subscriptions
+        $start_date = date('Y-m-d');
+        $end_date = date('Y-m-d', strtotime('+1 year'));
+        $plan_id = 1; // ID do plano premium
+
+        // Verificar se o usuário já tem uma assinatura
+        $sql_check_subscription = "SELECT id FROM subscriptions WHERE user_id = ?";
+        $stmt_check = $conn->prepare($sql_check_subscription);
+        $stmt_check->bind_param("i", $user_id);
+        $stmt_check->execute();
+        $result_check = $stmt_check->get_result();
+
+        if ($result_check->num_rows > 0) {
+            // Se já existe uma assinatura, atualizar a assinatura existente
+            $sql_update_subscription = "
+                UPDATE subscriptions
+                SET plan_id = ?, is_active = 1, start_date = ?, end_date = ?
+                WHERE user_id = ?
+            ";
+            $stmt_update = $conn->prepare($sql_update_subscription);
+            $stmt_update->bind_param("issi", $plan_id, $start_date, $end_date, $user_id);
+            $stmt_update->execute();
+        } else {
+            // Se não existe uma assinatura, inserir uma nova
+            $sql_insert_subscription = "
+                INSERT INTO subscriptions (user_id, plan_id, is_active, start_date, end_date)
+                VALUES (?, ?, 1, ?, ?)
+            ";
+            $stmt_insert = $conn->prepare($sql_insert_subscription);
+            $stmt_insert->bind_param("iiss", $user_id, $plan_id, $start_date, $end_date);
+            $stmt_insert->execute();
+        }
+
+        // Remove o pedido da tabela request
+        $sql_delete_request = "DELETE FROM request WHERE id = ?";
+        $stmt_delete = $conn->prepare($sql_delete_request);
+        $stmt_delete->bind_param("i", $request_id);
+        $stmt_delete->execute();
+
+        echo "<script>alert('Plano premium aceito e atualizado com sucesso!');</script>";
+        echo "<script>window.location.href = 'premium.php';</script>";
+    } else {
+        echo "<script>alert('Pedido não encontrado.');</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,8 +116,10 @@ $result = $conn->query($sql);
                                 <p><strong>Assunto:</strong> " . $row['subject'] . "</p>
                                 <p><strong>Mensagem:</strong> " . $row['message'] . "</p>
                                 <p><strong>Solicitado em:</strong> " . $row['created_at'] . "</p>
-                                <button class='btn btn-success accept-btn' data-id='" . $row['request_id'] . "'>Aceitar</button>
-                                <button class='btn btn-danger reject-btn' data-id='" . $row['request_id'] . "'>Rejeitar</button>
+                                <form method='POST'>
+                                    <button class='btn btn-success' type='submit' name='accept_request_id' value='" . $row['request_id'] . "'>Aceitar</button>
+                                    <button class='btn btn-danger' type='submit' name='reject_request_id' value='" . $row['request_id'] . "'>Rejeitar</button>
+                                </form>
                             </div>
                         </div>
                     </div>";
@@ -69,63 +132,6 @@ $result = $conn->query($sql);
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Função para aceitar ou rejeitar um pedido
-        $(".accept-btn").click(function() {
-        var requestId = $(this).data("id");
-        $.ajax({
-            url: 'process_premium.php', // Novo arquivo PHP que vai lidar com a aceitação
-            type: 'POST',
-            data: {
-                action: 'accept',
-                request_id: requestId
-            },
-            success: function(response) {
-                // Garantir que o retorno seja um JSON
-                var data = JSON.parse(response);
-                if (data.status === 'success') {
-                    // Mostrar o alerta de sucesso
-                    alert(data.message);
-                    // Opcionalmente, você pode remover o card ou atualizar a página
-                    $('#request-' + requestId).fadeOut();
-                } else {
-                    alert(data.message); // Exibir a mensagem de erro
-                }
-            },
-            error: function() {
-                alert("Ocorreu um erro ao processar a solicitação!");
-            }
-        });
-    });
-
-    $(".reject-btn").click(function() {
-        var requestId = $(this).data("id");
-        $.ajax({
-            url: 'process_premium.php', // Novo arquivo PHP que vai lidar com a rejeição
-            type: 'POST',
-            data: {
-                action: 'reject',
-                request_id: requestId
-            },
-            success: function(response) {
-                // Garantir que o retorno seja um JSON
-                var data = JSON.parse(response);
-                if (data.status === 'success') {
-                    // Mostrar o alerta de sucesso
-                    alert(data.message);
-                    // Opcionalmente, você pode remover o card ou atualizar a página
-                    $('#request-' + requestId).fadeOut();
-                } else {
-                    alert(data.message); // Exibir a mensagem de erro
-                }
-            },
-            error: function() {
-                alert("Ocorreu um erro ao processar a solicitação!");
-            }
-        });
-    });
-
-    </script>
 </body>
 </html>
 
