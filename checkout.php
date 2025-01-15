@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="mt-4 mb-4">
                 <h4 class="text-center">Preço Final</h4>
                 <p class="text-center"><strong>Plano:</strong> <?php echo ($plan == 'annual' ? 'Plano Anual' : 'Plano Mensal'); ?></p>
-                <p class="text-center"><strong>Preço:</strong> €<?php echo number_format($price, 2); ?></p>
+                <p class="text-center"><strong>Preço:</strong> €<?php echo number_format($price * 12, 2); ?></p>
                 <p class="text-center"><strong>Frequência:</strong> <?php echo $priceText; ?></p>
             </div>
 
