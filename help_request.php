@@ -1,6 +1,7 @@
 <?php
 // Incluir a conexão com o banco de dados
 include('db_connection.php');
+ include_once 'header_choose.php'
 ?>
 
 <!DOCTYPE html>
